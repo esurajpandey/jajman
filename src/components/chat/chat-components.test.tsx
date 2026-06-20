@@ -3,6 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MessageBubble } from './MessageBubble';
 import { ChatComposer } from './ChatComposer';
 import { AddressForm } from '../booking/AddressForm';
+import { ConversationRow } from './ConversationRow';
+import { seedThreads } from '../../mock/seed';
 
 describe('chat + address components', () => {
   it('MessageBubble renders text and attachment', () => {
@@ -29,5 +31,22 @@ describe('chat + address components', () => {
     fireEvent.change(screen.getByLabelText('City'), { target: { value: 'Pune' } });
     fireEvent.click(save);
     expect(onSave).toHaveBeenCalledWith(expect.objectContaining({ label: 'Home', city: 'Pune', type: 'home' }));
+  });
+  it('ConversationRow shows pandit + last message and activates via keyboard', () => {
+    const onClick = vi.fn();
+    render(<ConversationRow thread={seedThreads[0]} onClick={onClick} />);
+    expect(screen.getByText('Pandit Ramesh Sharma')).toBeInTheDocument();
+    const row = screen.getByRole('button', { name: /Chat with/ });
+    fireEvent.keyDown(row, { key: 'Enter' });
+    expect(onClick).toHaveBeenCalled();
+  });
+  it('ChatComposer sends on Enter and clears', () => {
+    const onSend = vi.fn();
+    render(<ChatComposer onSend={onSend} onAttach={() => {}} />);
+    const input = screen.getByLabelText('Message');
+    fireEvent.change(input, { target: { value: 'hello' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(onSend).toHaveBeenCalledWith('hello');
+    expect((input as HTMLInputElement).value).toBe('');
   });
 });

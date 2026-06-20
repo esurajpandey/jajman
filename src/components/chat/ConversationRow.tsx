@@ -12,8 +12,8 @@ export function ConversationRow({ thread, onClick }: { thread: ChatThread; onCli
       aria-label={`Chat with ${pandit?.name ?? 'pandit'}`} className="flex cursor-pointer items-center gap-3 p-3">
       <Avatar name={pandit?.name ?? '?'} size={44} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{pandit?.name}</p>
-        <p className="truncate text-xs text-muted">{last ? last.text : 'No messages yet'}</p>
+        <p className="truncate text-sm font-semibold">{pandit?.name ?? 'Unknown pandit'}</p>
+        <p className="truncate text-xs text-muted">{last?.text || last?.attachmentName || 'No messages yet'}</p>
       </div>
     </Card>
   );
