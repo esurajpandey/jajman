@@ -39,7 +39,7 @@ export const seedPandits: PanditSummary[] = [
     travelPreference: 'within',
   },
   {
-    id: 'pnd-3', name: 'Acharya Vinod Dubey', city: 'Mumbai', distanceKm: 5.1, experienceYears: 25, rating: 5.0, ratingCount: 301, pujasCompleted: 880, languages: ['Hindi', 'Sanskrit', 'English'], specializations: ['Maha Mrityunjaya Jaap', 'Yagna'], startingPrice: 2100, responseRatePct: 99, responseTimeMins: 8, status: 'approved', favorite: false,
+    id: 'pnd-3', name: 'Acharya Vinod Dubey', city: 'Mumbai', distanceKm: 5.1, experienceYears: 25, rating: 5.0, ratingCount: 301, pujasCompleted: 880, languages: ['Hindi', 'Sanskrit', 'English'], specializations: ['Maha Mrityunjaya Jaap', 'Yagna'], startingPrice: 1500, responseRatePct: 99, responseTimeMins: 8, status: 'approved', favorite: false,
     about: 'Renowned Vedic acharya with 25 years of expertise in Maha Mrityunjaya Jaap and Yagna. Fluent in Sanskrit and English, bringing deep spiritual insight to every ritual.',
     supportedPujas: [
       { pujaId: 'puja-mahamrityunjaya', charge: 2100, durationMins: 180 },
