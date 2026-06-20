@@ -23,6 +23,7 @@ export function BookingFlow() {
   const isEmergency = params.get('urgent') === '1';
   const teamParam = params.get('team') || '';
   const modeParam = params.get('mode'); // 'build' | 'lead' | null
+  const pujaParam = params.get('puja');
 
   const pandit = useDataStore((s) => s.getPandit(panditId));
   const pujas = useDataStore((s) => s.pujas);
@@ -42,8 +43,9 @@ export function BookingFlow() {
       type: modeParam ? 'multi' : 'single',
       assignmentMode: modeParam === 'build' || modeParam === 'lead' ? modeParam : undefined,
       teamPanditIds: team,
+      pujaId: pujaParam ?? null,
     });
-  }, [panditId, isEmergency, teamParam, modeParam, startDraft]);
+  }, [panditId, isEmergency, teamParam, modeParam, pujaParam, startDraft]);
 
   if (!pandit || !draft) {
     return <><AppBar title="Book" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Loading…</div></>;

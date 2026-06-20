@@ -9,6 +9,7 @@ import { MoneyBreakdown } from '../../../components/ui/MoneyBreakdown';
 import { Countdown } from '../../../components/ui/Countdown';
 import { RefundBreakdown } from '../../../components/ui/RefundBreakdown';
 import { CancelSheet } from './CancelSheet';
+import { RecurringSheet } from './RecurringSheet';
 import { useBookingStore } from '../../../store/bookingStore';
 import { useDataStore } from '../../../store/dataStore';
 
@@ -19,9 +20,11 @@ export function BookingDetailScreen() {
   const simulateAccept = useBookingStore((s) => s.simulateAccept);
   const getAddress = useBookingStore((s) => s.getAddress);
   const cancelBooking = useBookingStore((s) => s.cancelBooking);
+  const createRecurring = useBookingStore((s) => s.createRecurring);
   const pandit = useDataStore((s) => s.getPandit(booking?.panditId ?? ''));
   const puja = useDataStore((s) => s.getPuja(booking?.pujaId ?? ''));
   const [cancelOpen, setCancelOpen] = useState(false);
+  const [recurOpen, setRecurOpen] = useState(false);
 
   if (!booking) {
     return <><AppBar title="Booking" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Booking not found.</div></>;
@@ -85,6 +88,11 @@ export function BookingDetailScreen() {
             Rebook
           </Button>
         )}
+        {(booking.status === 'rated' || booking.status === 'completed') && (
+          <Button variant="outline" className="w-full" onClick={() => setRecurOpen(true)}>
+            Make recurring
+          </Button>
+        )}
         {canCancel && (
           <Button variant="outline" className="w-full" onClick={() => setCancelOpen(true)}>
             Cancel booking
@@ -102,6 +110,11 @@ export function BookingDetailScreen() {
         booking={booking}
         onClose={() => setCancelOpen(false)}
         onConfirm={(reason) => { cancelBooking(booking.id, 'jajman', reason); setCancelOpen(false); }}
+      />
+      <RecurringSheet
+        open={recurOpen}
+        onClose={() => setRecurOpen(false)}
+        onConfirm={(interval) => { createRecurring(booking.panditId, booking.pujaId, interval, new Date().toISOString()); setRecurOpen(false); navigate('/app/recurring'); }}
       />
     </>
   );

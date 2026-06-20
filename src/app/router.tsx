@@ -32,6 +32,9 @@ import { BookingDetailScreen } from '../screens/jajman/booking/BookingDetailScre
 import { PaymentScreen } from '../screens/jajman/booking/PaymentScreen';
 import { MultiPanditScreen } from '../screens/jajman/booking/MultiPanditScreen';
 import { EmergencyEntryScreen } from '../screens/jajman/booking/EmergencyEntryScreen';
+import { BookingsListScreen } from '../screens/jajman/BookingsListScreen';
+import { RatePanditScreen } from '../screens/jajman/booking/RatePanditScreen';
+import { ManageRecurringScreen } from '../screens/jajman/booking/ManageRecurringScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -76,6 +79,7 @@ export const routes: RouteObject[] = [
     children: [
       { path: '/app/home', element: <HomeScreen /> },
       { path: '/app/search', element: <SearchScreen /> },
+      { path: '/app/bookings', element: <BookingsListScreen /> },
     ],
   },
   {
@@ -95,6 +99,8 @@ export const routes: RouteObject[] = [
       { path: '/app/booking/:bookingId/sent', element: <RequestSentScreen /> },
       { path: '/app/booking/:bookingId', element: <BookingDetailScreen /> },
       { path: '/app/booking/:bookingId/pay/:kind', element: <PaymentScreen /> },
+      { path: '/app/booking/:bookingId/rate', element: <RatePanditScreen /> },
+      { path: '/app/recurring', element: <ManageRecurringScreen /> },
       { path: '/app/multi-pandit', element: <MultiPanditScreen /> },
       { path: '/app/urgent', element: <EmergencyEntryScreen /> },
     ],
