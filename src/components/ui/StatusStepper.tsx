@@ -15,9 +15,15 @@ const STEPS: { key: BookingStatus; label: string }[] = [
 const ORDER = STEPS.map((s) => s.key);
 
 export function StatusStepper({ status }: { status: BookingStatus }) {
-  // scheduled implies advance_paid is done; treat amountPaid step as reached at scheduled
-  const currentIdx = ORDER.indexOf(status === 'scheduled' ? 'scheduled' : status);
+  const currentIdx = ORDER.indexOf(status);
   const reached = (i: number) => currentIdx >= 0 && i <= currentIdx;
+  if (currentIdx === -1) {
+    return (
+      <div className="rounded-md bg-surface-2 px-3 py-2 text-sm font-medium capitalize text-muted">
+        {status.replace(/_/g, ' ')}
+      </div>
+    );
+  }
   return (
     <ol className="flex flex-col gap-0">
       {STEPS.map((s, i) => (

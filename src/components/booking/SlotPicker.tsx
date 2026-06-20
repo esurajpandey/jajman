@@ -15,6 +15,9 @@ export function SlotPicker({
   const base = dayjs(baseDateISO);
   const days = Array.from({ length: 7 }, (_, i) => base.add(i, 'day'));
 
+  const selectedDay = selectedISO ? dayjs(selectedISO) : null;
+  const currentTimeLabel = selectedDay ? selectedDay.format('hh:mm A') : TIMES[0];
+
   const pick = (day: dayjs.Dayjs, time: string) => {
     const [hm, ap] = time.split(' ');
     let [hh, mm] = hm.split(':').map(Number);
@@ -24,18 +27,20 @@ export function SlotPicker({
     onSelect(iso, `${day.format('D MMM')} · ${time}`);
   };
 
+  const day = selectedDay ?? days[0];
+
   return (
     <div className="flex flex-col gap-4">
       <div>
         <h3 className="mb-2 text-sm font-semibold">Date</h3>
         <div className="no-scrollbar flex gap-2 overflow-x-auto">
           {days.map((d) => {
-            const active = selectedISO != null && dayjs(selectedISO).isSame(d, 'day');
+            const active = selectedDay != null && selectedDay.isSame(d, 'day');
             return (
               <button
                 key={d.toISOString()}
                 type="button"
-                onClick={() => pick(d, TIMES[0])}
+                onClick={() => pick(d, currentTimeLabel)}
                 className={`flex w-14 shrink-0 flex-col items-center rounded-md border px-2 py-2 ${active ? 'border-primary bg-primary/10 text-primary' : 'border-border'}`}
               >
                 <span className="text-[10px] uppercase text-muted">{d.format('ddd')}</span>
@@ -49,8 +54,7 @@ export function SlotPicker({
         <h3 className="mb-2 text-sm font-semibold">Time</h3>
         <div className="flex flex-wrap gap-2">
           {TIMES.map((t) => {
-            const day = selectedISO ? dayjs(selectedISO) : days[0];
-            const active = selectedISO != null && dayjs(selectedISO).format('hh:mm A') === t;
+            const active = selectedDay != null && selectedDay.format('hh:mm A') === t;
             return <Chip key={t} label={t} selected={active} onClick={() => pick(day, t)} />;
           })}
         </div>

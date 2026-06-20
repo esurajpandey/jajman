@@ -1,5 +1,14 @@
 import type { BookingCharges } from '../../mock/types';
 
+function Row({ label, value, strong, accent }: { label: string; value: string; strong?: boolean; accent?: boolean }) {
+  return (
+    <div className={`flex items-center justify-between py-1 text-sm ${strong ? 'font-semibold' : ''} ${accent ? 'text-primary' : ''}`}>
+      <span className={strong || accent ? '' : 'text-muted'}>{label}</span>
+      <span>{value}</span>
+    </div>
+  );
+}
+
 export function MoneyBreakdown({
   charges,
   advance,
@@ -11,12 +20,6 @@ export function MoneyBreakdown({
   remaining: number;
   highlightAdvance?: boolean;
 }) {
-  const Row = ({ label, value, strong, accent }: { label: string; value: string; strong?: boolean; accent?: boolean }) => (
-    <div className={`flex items-center justify-between py-1 text-sm ${strong ? 'font-semibold' : ''} ${accent ? 'text-primary' : ''}`}>
-      <span className={strong || accent ? '' : 'text-muted'}>{label}</span>
-      <span>{value}</span>
-    </div>
-  );
   return (
     <div className="rounded-md border border-border bg-surface p-3">
       <Row label="Puja charge" value={`₹${charges.base}`} />

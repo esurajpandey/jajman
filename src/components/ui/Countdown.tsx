@@ -4,7 +4,10 @@ import dayjs from 'dayjs';
 export function Countdown({ deadlineISO, nowISO }: { deadlineISO: string; nowISO?: string }) {
   const [now, setNow] = useState(() => (nowISO ? dayjs(nowISO) : dayjs()));
   useEffect(() => {
-    if (nowISO) return; // fixed clock (tests) — don't tick
+    if (nowISO) {
+      setNow(dayjs(nowISO));
+      return;
+    }
     const t = setInterval(() => setNow(dayjs()), 60000);
     return () => clearInterval(t);
   }, [nowISO]);
