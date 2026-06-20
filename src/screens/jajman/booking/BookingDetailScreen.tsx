@@ -27,7 +27,7 @@ export function BookingDetailScreen() {
     return <><AppBar title="Booking" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Booking not found.</div></>;
   }
 
-  const remainingDue = booking.status === 'completed' && booking.amountPaid < booking.charges.subtotal;
+  const remainingDue = (booking.status === 'completed' || booking.status === 'rated') && booking.amountPaid < booking.charges.subtotal;
   const canCancel = ['requested', 'accepted', 'advance_paid', 'scheduled'].includes(booking.status);
 
   return (
@@ -90,7 +90,7 @@ export function BookingDetailScreen() {
             Cancel booking
           </Button>
         )}
-        {!['accepted'].includes(booking.status) && !remainingDue && !canCancel && booking.status !== 'completed' && booking.status !== 'rated' && (
+        {['advance_paid', 'scheduled', 'in_progress'].includes(booking.status) && (
           <Button variant="outline" className="w-full" onClick={() => navigate(`/app/chat/${booking.panditId}`)}>
             Message pandit
           </Button>

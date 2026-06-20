@@ -27,8 +27,31 @@ export function RatePanditScreen() {
     return <><AppBar title="Rate" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Booking not found.</div></>;
   }
 
+  if (booking.status === 'rated') {
+    return (
+      <>
+        <AppBar title="Rate pandit" left={<BackButton />} />
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
+          <p className="text-sm text-muted">You've already reviewed this pandit. 🙏</p>
+          <Button onClick={() => navigate(`/app/booking/${booking.id}`, { replace: true })}>Back to booking</Button>
+        </div>
+      </>
+    );
+  }
+  if (booking.status !== 'completed') {
+    return (
+      <>
+        <AppBar title="Rate pandit" left={<BackButton />} />
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
+          <p className="text-sm text-muted">You can rate the pandit once the puja is completed.</p>
+          <Button onClick={() => navigate(`/app/booking/${booking.id}`, { replace: true })}>Back to booking</Button>
+        </div>
+      </>
+    );
+  }
+
   const submit = () => {
-    addReview({ id: `rev-${nanoid(5)}`, panditId: pandit.id, jajmanName: userName, rating: stars, text: text.trim() || 'Great experience.', date: '2026-06-20' });
+    addReview({ id: `rev-${nanoid(5)}`, panditId: pandit.id, jajmanName: userName, rating: stars, text: text.trim() || 'Great experience.', date: new Date().toISOString().slice(0, 10) });
     rateBooking(booking.id);
     navigate(`/app/booking/${booking.id}`, { replace: true });
   };
