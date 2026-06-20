@@ -20,4 +20,11 @@ describe('ui primitives', () => {
     expect(screen.getByText('4.9')).toBeInTheDocument();
     expect(screen.getByText('(212)')).toBeInTheDocument();
   });
+
+  it('Avatar falls back to "?" for empty or honorific-only names', () => {
+    const { rerender } = render(<Avatar name="" />);
+    expect(screen.getByText('?')).toBeInTheDocument();
+    rerender(<Avatar name="Pandit" />);
+    expect(screen.getByText('?')).toBeInTheDocument();
+  });
 });

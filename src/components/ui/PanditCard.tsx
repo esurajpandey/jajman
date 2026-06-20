@@ -6,7 +6,16 @@ import { RatingStars } from './RatingStars';
 export function PanditCard({ p, onClick }: { p: PanditSummary; onClick?: () => void }) {
   return (
     <Card
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${p.name}`}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
       className="flex cursor-pointer gap-3 p-3 transition active:scale-[0.99]"
     >
       <Avatar name={p.name} />

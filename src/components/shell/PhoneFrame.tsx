@@ -11,6 +11,7 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
         className="relative flex w-full flex-col overflow-hidden bg-bg text-text md:h-[844px] md:max-h-[92vh] md:w-[390px] md:rounded-[42px] md:border-[10px] md:border-[#15100e] md:shadow-float"
         style={{ height: '100dvh' }}
       >
+        {/* Layout contract: children supply a sticky AppBar, a flex-1 overflow-y-auto body, and a BottomTabBar. */}
         {children}
       </div>
     </div>
