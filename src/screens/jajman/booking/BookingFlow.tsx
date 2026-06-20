@@ -8,6 +8,7 @@ import { SlotPicker } from '../../../components/booking/SlotPicker';
 import { AddressPicker } from '../../../components/booking/AddressPicker';
 import { AttachmentUploader } from '../../../components/booking/AttachmentUploader';
 import { MoneyBreakdown } from '../../../components/ui/MoneyBreakdown';
+import { AddAddressSheet } from './AddAddressSheet';
 import { useDataStore } from '../../../store/dataStore';
 import { useBookingStore } from '../../../store/bookingStore';
 import { computeCharges, travelEstimate } from '../../../domain/charges';
@@ -33,10 +34,12 @@ export function BookingFlow() {
   const patchDraft = useBookingStore((s) => s.patchDraft);
   const createBooking = useBookingStore((s) => s.createBookingFromDraft);
   const [step, setStep] = useState(0);
-  const [showAddrNote, setShowAddrNote] = useState(false);
+  const [addrOpen, setAddrOpen] = useState(false);
   const slotBaseISO = dayjs().startOf('day').add(isEmergency ? 0 : 1, 'day').toISOString();
 
   useEffect(() => {
+    const d = useBookingStore.getState().draft;
+    if (d && d.panditId === panditId) return; // keep an in-progress draft
     const team = teamParam ? teamParam.split(',').filter(Boolean) : [];
     startDraft(panditId, {
       isEmergency,
@@ -107,15 +110,12 @@ export function BookingFlow() {
         )}
 
         {step === 2 && (
-          <>
-            <AddressPicker
-              addresses={addresses}
-              selectedId={draft.addressId}
-              onSelect={(id) => patchDraft({ addressId: id })}
-              onAdd={() => setShowAddrNote(true)}
-            />
-            {showAddrNote && <p className="mt-2 text-xs text-muted">Adding new addresses arrives with Address Management (coming soon).</p>}
-          </>
+          <AddressPicker
+            addresses={addresses}
+            selectedId={draft.addressId}
+            onSelect={(id) => patchDraft({ addressId: id })}
+            onAdd={() => setAddrOpen(true)}
+          />
         )}
 
         {step === 3 && (
@@ -154,6 +154,7 @@ export function BookingFlow() {
           <Button className="w-full" onClick={submit}>Send booking request</Button>
         )}
       </div>
+      <AddAddressSheet open={addrOpen} onClose={() => setAddrOpen(false)} onAdded={(id) => patchDraft({ addressId: id })} />
     </>
   );
 }

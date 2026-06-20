@@ -112,7 +112,7 @@ export function PanditDetailScreen() {
       </div>
 
       <div className="flex items-center gap-3 border-t border-border bg-surface p-3">
-        <Button variant="outline" aria-label="Chat" onClick={() => navigate(`/app/chat/${pandit.id}`)} className="px-4">
+        <Button variant="outline" aria-label="Chat" onClick={() => navigate(`/app/chat`)} className="px-4">
           <MessageCircle size={18} />
         </Button>
         <Button className="flex-1" onClick={() => navigate(`/app/book/${pandit.id}`)}>

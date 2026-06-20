@@ -12,6 +12,7 @@ import { CancelSheet } from './CancelSheet';
 import { RecurringSheet } from './RecurringSheet';
 import { useBookingStore } from '../../../store/bookingStore';
 import { useDataStore } from '../../../store/dataStore';
+import { useChatStore } from '../../../store/chatStore';
 
 export function BookingDetailScreen() {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export function BookingDetailScreen() {
   const createRecurring = useBookingStore((s) => s.createRecurring);
   const pandit = useDataStore((s) => s.getPandit(booking?.panditId ?? ''));
   const puja = useDataStore((s) => s.getPuja(booking?.pujaId ?? ''));
+  const ensureThread = useChatStore((s) => s.ensureThreadForBooking);
   const [cancelOpen, setCancelOpen] = useState(false);
   const [recurOpen, setRecurOpen] = useState(false);
 
@@ -99,7 +101,7 @@ export function BookingDetailScreen() {
           </Button>
         )}
         {['advance_paid', 'scheduled', 'in_progress'].includes(booking.status) && (
-          <Button variant="outline" className="w-full" onClick={() => navigate(`/app/chat/${booking.panditId}`)}>
+          <Button variant="outline" className="w-full" onClick={() => { const t = ensureThread(booking.id, booking.panditId); navigate(`/app/chat/${t.id}`); }}>
             Message pandit
           </Button>
         )}
