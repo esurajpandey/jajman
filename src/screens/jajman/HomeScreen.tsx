@@ -5,7 +5,6 @@ import { SearchBar } from '../../components/ui/SearchBar';
 import { CategoryChip } from '../../components/ui/CategoryChip';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { PanditCard } from '../../components/ui/PanditCard';
-import { BottomTabBar } from '../../components/shell/BottomTabBar';
 import { useDataStore } from '../../store/dataStore';
 import { useUiStore } from '../../store/uiStore';
 
@@ -37,7 +36,7 @@ export function HomeScreen() {
         }
       />
 
-      <div className="flex-1 overflow-y-auto pb-4">
+      <div className="pb-4">
         <div className="px-4 pt-3">
           <SearchBar />
         </div>
@@ -58,8 +57,6 @@ export function HomeScreen() {
           ))}
         </div>
       </div>
-
-      <BottomTabBar />
     </>
   );
 }
