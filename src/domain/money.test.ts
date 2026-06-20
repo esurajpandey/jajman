@@ -23,4 +23,11 @@ describe('computeAdvance (§0.8 — default 30%)', () => {
   it('is 30% of subtotal by default', () => {
     expect(computeAdvance(1000)).toBe(300);
   });
+  it('rounds non-round advances', () => {
+    expect(computeAdvance(333)).toBe(100); // round(99.9)
+  });
+  it('returns 0 for non-positive subtotal', () => {
+    expect(computeAdvance(0)).toBe(0);
+    expect(computeAdvance(-500)).toBe(0);
+  });
 });

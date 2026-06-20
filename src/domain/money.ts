@@ -25,5 +25,6 @@ export function computeAdvance(
   subtotal: number,
   cfg: PricingConfig = defaultPricingConfig,
 ): number {
+  if (subtotal <= 0) return 0;
   return Math.round((cfg.advancePercent / 100) * subtotal);
 }

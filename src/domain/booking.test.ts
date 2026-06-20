@@ -35,6 +35,9 @@ describe('panditTab (§0.2)', () => {
     expect(panditTab('expired', '2026-06-25T15:00:00.000Z', now)).toBeNull();
     expect(panditTab('rejected', '2026-06-25T15:00:00.000Z', now)).toBeNull();
   });
+  it('today for a live booking whose start is in the past but not yet completed', () => {
+    expect(panditTab('in_progress', '2026-06-19T15:00:00.000Z', now)).toBe('today');
+  });
 });
 
 describe('computeRequestExpiry (§0.7)', () => {
