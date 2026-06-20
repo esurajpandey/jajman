@@ -18,7 +18,7 @@ export const jajmanTabs: TabItem[] = [
 
 export function BottomTabBar({ tabs = jajmanTabs }: { tabs?: TabItem[] }) {
   return (
-    <nav className="flex items-stretch border-t border-border bg-surface">
+    <nav aria-label="Main navigation" className="flex items-stretch border-t border-border bg-surface">
       {tabs.map((t) => {
         const Icon = t.icon;
         return (

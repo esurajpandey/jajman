@@ -17,7 +17,7 @@ export function HomeScreen() {
   return (
     <>
       <AppBar
-        left={<span className="text-lg font-bold text-primary">ॐ</span>}
+        left={<span aria-hidden="true" className="text-lg font-bold text-primary">ॐ</span>}
         title={
           <div className="leading-tight">
             <div className="text-[11px] font-normal text-muted">Namaste 🙏</div>
@@ -49,7 +49,7 @@ export function HomeScreen() {
 
         <SectionHeader
           title="Featured Pandits"
-          action={<button className="text-xs font-medium text-primary">See all</button>}
+          action={<button type="button" className="text-xs font-medium text-primary">See all</button>}
         />
         <div className="flex flex-col gap-3 px-4">
           {pandits.map((p) => (
