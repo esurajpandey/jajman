@@ -41,4 +41,10 @@ describe('dataStore', () => {
     useDataStore.getState().toggleFavorite('pnd-2');
     expect(useDataStore.getState().getPandit('pnd-2')!.favorite).toBe(!before);
   });
+
+  it('addReview prepends a review', () => {
+    const before = useDataStore.getState().getReviewsForPandit('pnd-1').length;
+    useDataStore.getState().addReview({ id: 'rev-new', panditId: 'pnd-1', jajmanName: 'Test', rating: 5, text: 'Great', date: '2026-06-20' });
+    expect(useDataStore.getState().getReviewsForPandit('pnd-1').length).toBe(before + 1);
+  });
 });

@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review, Address, Booking } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -136,4 +136,32 @@ export const seedBookings: Booking[] = [
     requestExpiresAt: '2026-06-02T09:00:00.000Z',
     isDisputed: false,
   },
+  {
+    id: 'bkg-demo-2', panditId: 'pnd-1', pujaId: 'puja-satyanarayan', type: 'single', status: 'scheduled',
+    pujaStartISO: '2026-07-05T09:00:00.000Z', slotLabel: '5 Jul · 09:00 AM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1100, travel: 48, emergencySurcharge: 0, subtotal: 1148 },
+    advanceAmount: 344, remainingAmount: 804, amountPaid: 344,
+    createdAt: '2026-06-18T09:00:00.000Z', requestExpiresAt: '2026-06-19T09:00:00.000Z', isDisputed: false,
+  },
+  {
+    id: 'bkg-demo-3', panditId: 'pnd-3', pujaId: 'puja-mahamrityunjaya', type: 'single', status: 'requested',
+    pujaStartISO: '2026-07-12T11:00:00.000Z', slotLabel: '12 Jul · 11:00 AM', addressId: 'addr-temple',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 2100, travel: 102, emergencySurcharge: 0, subtotal: 2202 },
+    advanceAmount: 661, remainingAmount: 1541, amountPaid: 0,
+    createdAt: '2026-06-20T08:00:00.000Z', requestExpiresAt: '2026-06-21T08:00:00.000Z', isDisputed: false,
+  },
+  {
+    id: 'bkg-demo-4', panditId: 'pnd-6', pujaId: 'puja-ganesh', type: 'single', status: 'rated',
+    pujaStartISO: '2026-05-02T16:00:00.000Z', slotLabel: '2 May · 04:00 PM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1500, travel: 86, emergencySurcharge: 0, subtotal: 1586 },
+    advanceAmount: 476, remainingAmount: 1110, amountPaid: 1586,
+    createdAt: '2026-04-20T09:00:00.000Z', requestExpiresAt: '2026-04-21T09:00:00.000Z', isDisputed: false,
+  },
+];
+
+export const seedRecurring: RecurringSeries[] = [
+  { id: 'rec-1', panditId: 'pnd-1', pujaId: 'puja-satyanarayan', interval: 'monthly', nextDate: '2026-07-15T09:00:00.000Z', status: 'active', generatedBookingIds: ['bkg-demo-1'], createdAt: '2026-05-15T09:00:00.000Z' },
 ];

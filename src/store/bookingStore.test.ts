@@ -50,4 +50,26 @@ describe('bookingStore', () => {
     const b = useBookingStore.getState().getBooking('bkg-demo-1')!;
     expect(b.amountPaid).toBe(b.charges.subtotal);
   });
+
+  it('cancelBooking (jajman) refunds amount paid minus 5%', () => {
+    // bkg-demo-1: amountPaid 288 → cut 14, refund 274
+    useBookingStore.getState().cancelBooking('bkg-demo-1', 'jajman', 'changed plans');
+    const b = useBookingStore.getState().getBooking('bkg-demo-1')!;
+    expect(b.status).toBe('cancelled');
+    expect(b.cancellation).toEqual({ initiatedBy: 'jajman', refundAmount: 274, platformCut: 14, reason: 'changed plans' });
+  });
+
+  it('cancelBooking (pandit) refunds in full', () => {
+    useBookingStore.getState().cancelBooking('bkg-demo-1', 'pandit');
+    expect(useBookingStore.getState().getBooking('bkg-demo-1')!.cancellation).toMatchObject({ refundAmount: 288, platformCut: 0 });
+  });
+
+  it('createRecurring computes the next date and pause/resume/cancel work', () => {
+    const r = useBookingStore.getState().createRecurring('pnd-1', 'puja-satyanarayan', 'monthly', '2026-06-15T09:00:00.000Z');
+    expect(r.nextDate).toBe('2026-07-15T09:00:00.000Z');
+    useBookingStore.getState().pauseRecurring(r.id);
+    expect(useBookingStore.getState().getRecurring().find((x) => x.id === r.id)?.status).toBe('paused');
+    useBookingStore.getState().cancelRecurring(r.id);
+    expect(useBookingStore.getState().getRecurring().find((x) => x.id === r.id)?.status).toBe('cancelled');
+  });
 });

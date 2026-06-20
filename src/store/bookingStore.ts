@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { nanoid } from 'nanoid';
-import type { Address, Booking, BookingAttachment, BookingType, AssignmentMode } from '../mock/types';
-import { seedAddresses, seedBookings, seedPandits, seedPujas } from './../mock/seed';
+import type { Address, Booking, BookingAttachment, BookingType, AssignmentMode, RecurInterval, RecurringSeries } from '../mock/types';
+import { seedAddresses, seedBookings, seedPandits, seedPujas, seedRecurring } from './../mock/seed';
 import { computeCharges, travelEstimate } from '../domain/charges';
 import { computeRequestExpiry } from '../domain/booking';
+import { computeRefund } from '../domain/money';
+import { nextRecurrence } from '../domain/recurrence';
 
 export interface BookingDraft {
   panditId: string;
@@ -32,6 +34,14 @@ interface BookingState {
   payRemaining: (bookingId: string) => void;
   getBooking: (id: string) => Booking | undefined;
   getAddress: (id: string) => Address | undefined;
+  recurring: RecurringSeries[];
+  cancelBooking: (id: string, initiatedBy: 'jajman' | 'pandit', reason?: string) => void;
+  rateBooking: (id: string) => void;
+  createRecurring: (panditId: string, pujaId: string, interval: RecurInterval, fromISO: string) => RecurringSeries;
+  pauseRecurring: (id: string) => void;
+  resumeRecurring: (id: string) => void;
+  cancelRecurring: (id: string) => void;
+  getRecurring: () => RecurringSeries[];
 }
 
 function baseCharge(panditId: string, pujaId: string | null): number {
@@ -46,6 +56,7 @@ export const useBookingStore = create<BookingState>((set, get) => ({
   bookings: seedBookings,
   addresses: seedAddresses,
   draft: null,
+  recurring: seedRecurring,
 
   startDraft: (panditId, opts) =>
     set({
@@ -123,4 +134,30 @@ export const useBookingStore = create<BookingState>((set, get) => ({
 
   getBooking: (id) => get().bookings.find((b) => b.id === id),
   getAddress: (id) => get().addresses.find((a) => a.id === id),
+
+  cancelBooking: (id, initiatedBy, reason) =>
+    set((s) => ({
+      bookings: s.bookings.map((b) => {
+        if (b.id !== id) return b;
+        const { refundAmount, platformCut } = computeRefund(b.amountPaid, initiatedBy);
+        return { ...b, status: 'cancelled', cancellation: { initiatedBy, refundAmount, platformCut, reason } };
+      }),
+    })),
+
+  rateBooking: (id) =>
+    set((s) => ({ bookings: s.bookings.map((b) => (b.id === id && b.status === 'completed' ? { ...b, status: 'rated' } : b)) })),
+
+  createRecurring: (panditId, pujaId, interval, fromISO) => {
+    const series: RecurringSeries = {
+      id: `rec-${nanoid(6)}`, panditId, pujaId, interval,
+      nextDate: nextRecurrence(fromISO, interval), status: 'active', generatedBookingIds: [], createdAt: fromISO,
+    };
+    set((s) => ({ recurring: [series, ...s.recurring] }));
+    return series;
+  },
+
+  pauseRecurring: (id) => set((s) => ({ recurring: s.recurring.map((r) => (r.id === id ? { ...r, status: 'paused' } : r)) })),
+  resumeRecurring: (id) => set((s) => ({ recurring: s.recurring.map((r) => (r.id === id ? { ...r, status: 'active' } : r)) })),
+  cancelRecurring: (id) => set((s) => ({ recurring: s.recurring.map((r) => (r.id === id ? { ...r, status: 'cancelled' } : r)) })),
+  getRecurring: () => get().recurring,
 }));

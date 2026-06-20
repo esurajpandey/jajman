@@ -104,4 +104,22 @@ export interface Booking {
   createdAt: string;
   requestExpiresAt: string;
   isDisputed: boolean;
+  cancellation?: {
+    initiatedBy: 'jajman' | 'pandit';
+    refundAmount: number;
+    platformCut: number;
+    reason?: string;
+  };
+}
+
+export type RecurInterval = 'monthly' | 'quarterly' | 'annual';
+export interface RecurringSeries {
+  id: string;
+  panditId: string;
+  pujaId: string;
+  interval: RecurInterval;
+  nextDate: string; // ISO
+  status: 'active' | 'paused' | 'cancelled';
+  generatedBookingIds: string[];
+  createdAt: string;
 }
