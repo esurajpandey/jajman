@@ -7,7 +7,7 @@ const LABEL: Record<BookingStatus, string> = {
   cancelled: 'Cancelled', refund_initiated: 'Refund initiated', refund_completed: 'Refunded', expired: 'Expired',
 };
 const TONE: Partial<Record<BookingStatus, string>> = {
-  scheduled: 'bg-info/10 text-info', accepted: 'bg-info/10 text-info', in_progress: 'bg-warning/15 text-warning',
+  scheduled: 'bg-info/10 text-info', accepted: 'bg-info/10 text-info', advance_paid: 'bg-info/10 text-info', in_progress: 'bg-warning/15 text-warning',
   completed: 'bg-success/10 text-success', rated: 'bg-success/10 text-success',
   cancelled: 'bg-error/10 text-error', rejected: 'bg-error/10 text-error', expired: 'bg-error/10 text-error',
   refund_initiated: 'bg-warning/15 text-warning', refund_completed: 'bg-success/10 text-success',

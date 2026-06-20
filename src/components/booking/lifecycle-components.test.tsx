@@ -16,6 +16,7 @@ describe('lifecycle components', () => {
     expect(screen.getByText('Amount paid')).toBeInTheDocument();
     expect(screen.getByText('−₹14')).toBeInTheDocument();
     expect(screen.getByText('₹274')).toBeInTheDocument();
+    expect(screen.getByText('₹288')).toBeInTheDocument();
   });
   it('RatingInput reports the chosen star', () => {
     const onChange = vi.fn();
@@ -23,9 +24,23 @@ describe('lifecycle components', () => {
     fireEvent.click(screen.getByRole('button', { name: '4 stars' }));
     expect(onChange).toHaveBeenCalledWith(4);
   });
-  it('BookingCard shows puja, pandit, and status', () => {
-    render(<BookingCard booking={seedBookings[0]} />);
+  it('BookingCard shows puja, pandit, slot, status and activates via keyboard', () => {
+    const onClick = vi.fn();
+    render(<BookingCard booking={seedBookings[0]} onClick={onClick} />);
     expect(screen.getByText('Ganesh Puja')).toBeInTheDocument();
+    expect(screen.getByText('Pandit Suresh Joshi')).toBeInTheDocument();
+    expect(screen.getByText('10 Jun · 09:00 AM')).toBeInTheDocument();
     expect(screen.getByText('Completed')).toBeInTheDocument();
+    const card = screen.getByRole('button', { name: /View booking/ });
+    fireEvent.keyDown(card, { key: 'Enter' });
+    expect(onClick).toHaveBeenCalled();
+  });
+  it('StatusPill maps cancelled / refunded / advance_paid labels', () => {
+    const { rerender } = render(<StatusPill status="cancelled" />);
+    expect(screen.getByText('Cancelled')).toBeInTheDocument();
+    rerender(<StatusPill status="refund_completed" />);
+    expect(screen.getByText('Refunded')).toBeInTheDocument();
+    rerender(<StatusPill status="advance_paid" />);
+    expect(screen.getByText('Advance paid')).toBeInTheDocument();
   });
 });
