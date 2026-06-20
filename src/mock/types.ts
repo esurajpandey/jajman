@@ -15,6 +15,23 @@ export interface Puja {
 
 export type PanditStatus = 'pending' | 'approved' | 'rejected';
 
+export interface SupportedPuja {
+  pujaId: string;
+  charge: number;
+  durationMins: number;
+}
+
+export interface Review {
+  id: string;
+  panditId: string;
+  jajmanName: string;
+  rating: number; // 1..5
+  text: string;
+  date: string; // ISO
+}
+
+export type TravelPreference = 'within' | 'outside' | 'anywhere';
+
 export interface PanditSummary {
   id: string;
   name: string;
@@ -31,4 +48,8 @@ export interface PanditSummary {
   responseTimeMins: number;
   status: PanditStatus;
   favorite: boolean;
+  about: string;
+  supportedPujas: SupportedPuja[];
+  serviceRadiusKm: number;
+  travelPreference: TravelPreference;
 }

@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useDataStore } from './dataStore';
-import { seedCategories, seedPujas, seedPandits } from '../mock/seed';
+import { seedCategories, seedPujas, seedPandits, seedReviews } from '../mock/seed';
 
 beforeEach(() => {
-  useDataStore.setState({ categories: seedCategories, pujas: seedPujas, pandits: seedPandits });
+  useDataStore.setState({ categories: seedCategories, pujas: seedPujas, pandits: seedPandits, reviews: seedReviews });
 });
 
 describe('dataStore', () => {
@@ -21,5 +21,24 @@ describe('dataStore', () => {
 
   it('getFeaturedPandits caps the list', () => {
     expect(useDataStore.getState().getFeaturedPandits(3)).toHaveLength(3);
+  });
+
+  it('getPandit / getReviewsForPandit work', () => {
+    const s = useDataStore.getState();
+    expect(s.getPandit('pnd-1')?.name).toContain('Ramesh');
+    expect(s.getReviewsForPandit('pnd-1').length).toBeGreaterThan(0);
+  });
+
+  it('getPanditsForCategory returns approved pandits offering a puja in that category', () => {
+    const s = useDataStore.getState();
+    const list = s.getPanditsForCategory('cat-katha');
+    expect(list.length).toBeGreaterThan(0);
+    expect(list.every((p) => p.status === 'approved')).toBe(true);
+  });
+
+  it('toggleFavorite flips the favorite flag', () => {
+    const before = useDataStore.getState().getPandit('pnd-2')!.favorite;
+    useDataStore.getState().toggleFavorite('pnd-2');
+    expect(useDataStore.getState().getPandit('pnd-2')!.favorite).toBe(!before);
   });
 });
