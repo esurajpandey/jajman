@@ -13,11 +13,12 @@ export function OtpInput({
   const refs = useRef<Array<HTMLInputElement | null>>([]);
 
   const setChar = (i: number, ch: string) => {
+    const idx = Math.min(i, value.length); // no gaps: keeps the compact value positionally correct
     const digits = value.split('');
-    digits[i] = ch;
+    digits[idx] = ch;
     const next = digits.join('').slice(0, length);
     onChange(next);
-    if (ch && i < length - 1) refs.current[i + 1]?.focus();
+    if (ch && idx < length - 1) refs.current[idx + 1]?.focus();
   };
 
   return (

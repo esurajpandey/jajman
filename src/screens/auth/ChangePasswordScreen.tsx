@@ -25,7 +25,7 @@ export function ChangePasswordScreen() {
           error={mismatch ? 'Passwords do not match' : undefined} />
       </div>
       {done && <p className="mt-4 text-sm text-success">Password updated (demo).</p>}
-      <Button className="mt-5 w-full" disabled={next.length < 4 || mismatch} onClick={() => setDone(true)}>
+      <Button className="mt-5 w-full" disabled={next.length < 4 || confirm.length === 0 || next !== confirm} onClick={() => setDone(true)}>
         Update password
       </Button>
     </div>

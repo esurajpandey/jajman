@@ -11,6 +11,7 @@ export function OtpScreen() {
   const verifyOtp = useSessionStore((s) => s.verifyOtp);
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
+  const [resent, setResent] = useState(false);
 
   const submit = () => {
     if (verifyOtp(code)) navigate('/auth/role', { replace: true });
@@ -39,7 +40,9 @@ export function OtpScreen() {
       <Button className="mt-5 w-full" disabled={code.length !== 6} onClick={submit}>
         Verify & continue
       </Button>
-      <button type="button" className="mt-4 text-center text-sm text-muted">Resend code</button>
+      <button type="button" onClick={() => setResent(true)} className="mt-4 text-center text-sm text-muted">
+        {resent ? 'Code resent (demo)' : 'Resend code'}
+      </button>
     </div>
   );
 }

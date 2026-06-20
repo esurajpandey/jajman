@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
+import { useState } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { TextField } from './TextField';
 import { OtpInput } from './OtpInput';
@@ -17,6 +18,18 @@ describe('auth form primitives', () => {
     render(<OtpInput value="" onChange={onChange} />);
     fireEvent.change(screen.getByLabelText('Digit 1'), { target: { value: '1' } });
     expect(onChange).toHaveBeenCalledWith('1');
+  });
+
+  it('OtpInput fills sequentially without losing digits', () => {
+    function Wrapper() {
+      const [v, setV] = useState('');
+      return <OtpInput value={v} onChange={setV} />;
+    }
+    render(<Wrapper />);
+    fireEvent.change(screen.getByLabelText('Digit 1'), { target: { value: '1' } });
+    fireEvent.change(screen.getByLabelText('Digit 2'), { target: { value: '2' } });
+    expect((screen.getByLabelText('Digit 1') as HTMLInputElement).value).toBe('1');
+    expect((screen.getByLabelText('Digit 2') as HTMLInputElement).value).toBe('2');
   });
 
   it('SegmentedControl marks the selected segment and reports changes', () => {

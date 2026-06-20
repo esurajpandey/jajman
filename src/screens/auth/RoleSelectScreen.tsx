@@ -22,6 +22,7 @@ export function RoleSelectScreen() {
     <button
       type="button"
       onClick={() => setChoice(value)}
+      aria-pressed={choice === value}
       className={cn(
         'flex items-start gap-3 rounded-md border p-4 text-left',
         choice === value ? 'border-primary bg-primary/5' : 'border-border bg-surface',
