@@ -30,7 +30,8 @@ export function BookingFlow() {
   const patchDraft = useBookingStore((s) => s.patchDraft);
   const createBooking = useBookingStore((s) => s.createBookingFromDraft);
   const [step, setStep] = useState(0);
-  const today = dayjs().startOf('day').toISOString();
+  const [showAddrNote, setShowAddrNote] = useState(false);
+  const slotBaseISO = dayjs().startOf('day').add(isEmergency ? 0 : 1, 'day').toISOString();
 
   useEffect(() => {
     startDraft(panditId, { isEmergency, type: 'single' });
@@ -45,8 +46,7 @@ export function BookingFlow() {
     (step === 0 && !!draft.pujaId) ||
     (step === 1 && !!draft.pujaStartISO) ||
     (step === 2 && !!draft.addressId) ||
-    step === 3 ||
-    step === 4;
+    step === 3;
 
   const submit = () => {
     const booking = createBooking(dayjs().toISOString());
@@ -90,19 +90,22 @@ export function BookingFlow() {
 
         {step === 1 && (
           <SlotPicker
-            baseDateISO={today}
+            baseDateISO={slotBaseISO}
             selectedISO={draft.pujaStartISO}
             onSelect={(iso, label) => patchDraft({ pujaStartISO: iso, slotLabel: label })}
           />
         )}
 
         {step === 2 && (
-          <AddressPicker
-            addresses={addresses}
-            selectedId={draft.addressId}
-            onSelect={(id) => patchDraft({ addressId: id })}
-            onAdd={() => alert('Add-address is part of Address Management (P2).')}
-          />
+          <>
+            <AddressPicker
+              addresses={addresses}
+              selectedId={draft.addressId}
+              onSelect={(id) => patchDraft({ addressId: id })}
+              onAdd={() => setShowAddrNote(true)}
+            />
+            {showAddrNote && <p className="mt-2 text-xs text-muted">Adding new addresses arrives with Address Management (coming soon).</p>}
+          </>
         )}
 
         {step === 3 && (
