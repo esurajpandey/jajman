@@ -38,6 +38,12 @@ describe('searchPandits', () => {
     const r = searchPandits(seedPandits, seedPujas, '', { ...emptyFilters, city: 'Mumbai' });
     expect(r.every((p) => p.city === 'Mumbai')).toBe(true);
   });
+
+  it('pujaId filter keeps only pandits offering that specific puja', () => {
+    const r = searchPandits(seedPandits, seedPujas, '', { ...emptyFilters, pujaId: 'puja-ganesh' });
+    expect(r.length).toBeGreaterThan(0);
+    expect(r.every((p) => p.supportedPujas.some((sp) => sp.pujaId === 'puja-ganesh'))).toBe(true);
+  });
 });
 
 describe('sortPandits', () => {

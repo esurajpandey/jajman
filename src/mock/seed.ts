@@ -58,7 +58,7 @@ export const seedPandits: PanditSummary[] = [
     travelPreference: 'within',
   },
   {
-    id: 'pnd-5', name: 'Pandit Gopal Mishra', city: 'Nashik', distanceKm: 8.6, experienceYears: 15, rating: 4.8, ratingCount: 176, pujasCompleted: 410, languages: ['Hindi', 'Sanskrit'], specializations: ['Marriage', 'Griha Pravesh'], startingPrice: 2500, responseRatePct: 96, responseTimeMins: 15, status: 'approved', favorite: false,
+    id: 'pnd-5', name: 'Pandit Gopal Mishra', city: 'Nashik', distanceKm: 8.6, experienceYears: 15, rating: 4.8, ratingCount: 176, pujasCompleted: 410, languages: ['Hindi', 'Sanskrit'], specializations: ['Marriage', 'Griha Pravesh'], startingPrice: 1300, responseRatePct: 96, responseTimeMins: 15, status: 'approved', favorite: false,
     about: 'Highly sought-after pandit for marriage ceremonies and Griha Pravesh in Nashik. Renowned for conducting flawless Vedic rituals with detailed explanations.',
     supportedPujas: [
       { pujaId: 'puja-griha', charge: 2500, durationMins: 180 },
