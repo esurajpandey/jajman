@@ -40,4 +40,13 @@ describe('payment flow', () => {
     harness('/app/booking/bkg-demo-1');
     expect(screen.getByRole('button', { name: /Pay remaining/ })).toBeInTheDocument();
   });
+
+  it('shows "not due" when visiting /pay/advance for a non-accepted (requested) booking', () => {
+    const s = useBookingStore.getState();
+    s.startDraft('pnd-1');
+    s.patchDraft({ pujaId: 'puja-satyanarayan', pujaStartISO: '2026-07-01T09:00:00.000Z', slotLabel: 'x', addressId: 'addr-home' });
+    const b = useBookingStore.getState().createBookingFromDraft('2026-06-20T09:00:00.000Z'); // status 'requested'
+    harness(`/app/booking/${b.id}/pay/advance`);
+    expect(screen.getByText(/isn't due/)).toBeInTheDocument();
+  });
 });

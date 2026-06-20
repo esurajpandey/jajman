@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Check, Loader2, Smartphone, CreditCard, Building2, Wallet } from 'lucide-react';
 import { AppBar } from '../../../components/ui/AppBar';
@@ -22,14 +22,31 @@ export function PaymentScreen() {
   const payRemaining = useBookingStore((s) => s.payRemaining);
   const [method, setMethod] = useState('upi');
   const [phase, setPhase] = useState<'idle' | 'processing' | 'done'>('idle');
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
   if (!booking) return <><AppBar title="Payment" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Booking not found.</div></>;
 
   const amount = kind === 'remaining' ? booking.remainingAmount : booking.advanceAmount;
 
+  const advancePayable = kind !== 'remaining' && booking.status === 'accepted';
+  const remainingPayable = kind === 'remaining' && booking.status === 'completed' && booking.amountPaid < booking.charges.subtotal;
+  if (phase === 'idle' && !advancePayable && !remainingPayable) {
+    return (
+      <>
+        <AppBar title="Payment" left={<BackButton />} />
+        <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
+          <p className="text-sm text-muted">This payment isn't due for this booking.</p>
+          <Button onClick={() => navigate(`/app/booking/${booking.id}`, { replace: true })}>Back to booking</Button>
+        </div>
+      </>
+    );
+  }
+
   const pay = () => {
     setPhase('processing');
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       if (kind === 'remaining') payRemaining(booking.id);
       else payAdvance(booking.id);
       setPhase('done');

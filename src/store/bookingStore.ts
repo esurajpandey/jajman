@@ -117,7 +117,7 @@ export const useBookingStore = create<BookingState>((set, get) => ({
   payRemaining: (bookingId) =>
     set((s) => ({
       bookings: s.bookings.map((b) =>
-        b.id === bookingId ? { ...b, amountPaid: b.charges.subtotal } : b,
+        b.id === bookingId ? { ...b, amountPaid: b.charges.subtotal, remainingAmount: 0 } : b,
       ),
     })),
 
