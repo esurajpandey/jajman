@@ -112,6 +112,21 @@ export interface Booking {
   };
 }
 
+export interface ChatMessage {
+  id: string;
+  senderId: string; // 'me' for the jajman, or the pandit's id
+  text: string;
+  sentAt: string; // ISO
+  attachmentName?: string;
+}
+export interface ChatThread {
+  id: string;
+  bookingId: string;
+  panditId: string;
+  phoneShared: boolean; // §0.9 per-booking override
+  messages: ChatMessage[];
+}
+
 export type RecurInterval = 'monthly' | 'quarterly' | 'annual';
 export interface RecurringSeries {
   id: string;

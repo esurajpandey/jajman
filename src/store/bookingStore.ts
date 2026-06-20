@@ -35,6 +35,9 @@ interface BookingState {
   getBooking: (id: string) => Booking | undefined;
   getAddress: (id: string) => Address | undefined;
   recurring: RecurringSeries[];
+  addAddress: (addr: Omit<Address, 'id'>) => Address;
+  updateAddress: (id: string, patch: Partial<Omit<Address, 'id'>>) => void;
+  deleteAddress: (id: string) => void;
   cancelBooking: (id: string, initiatedBy: 'jajman' | 'pandit', reason?: string) => void;
   rateBooking: (id: string) => void;
   createRecurring: (panditId: string, pujaId: string, interval: RecurInterval, fromISO: string) => RecurringSeries;
@@ -134,6 +137,14 @@ export const useBookingStore = create<BookingState>((set, get) => ({
 
   getBooking: (id) => get().bookings.find((b) => b.id === id),
   getAddress: (id) => get().addresses.find((a) => a.id === id),
+
+  addAddress: (addr) => {
+    const created: Address = { ...addr, id: `addr-${nanoid(6)}` };
+    set((s) => ({ addresses: [...s.addresses, created] }));
+    return created;
+  },
+  updateAddress: (id, patch) => set((s) => ({ addresses: s.addresses.map((a) => (a.id === id ? { ...a, ...patch } : a)) })),
+  deleteAddress: (id) => set((s) => ({ addresses: s.addresses.filter((a) => a.id !== id) })),
 
   cancelBooking: (id, initiatedBy, reason) =>
     set((s) => ({

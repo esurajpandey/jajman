@@ -64,6 +64,15 @@ describe('bookingStore', () => {
     expect(useBookingStore.getState().getBooking('bkg-demo-1')!.cancellation).toMatchObject({ refundAmount: 288, platformCut: 0 });
   });
 
+  it('addAddress / updateAddress / deleteAddress mutate the address list', () => {
+    const created = useBookingStore.getState().addAddress({ label: 'Office', type: 'custom', line: '5 MG Rd', city: 'Pune' });
+    expect(useBookingStore.getState().getAddress(created.id)?.label).toBe('Office');
+    useBookingStore.getState().updateAddress(created.id, { label: 'Work' });
+    expect(useBookingStore.getState().getAddress(created.id)?.label).toBe('Work');
+    useBookingStore.getState().deleteAddress(created.id);
+    expect(useBookingStore.getState().getAddress(created.id)).toBeUndefined();
+  });
+
   it('createRecurring computes the next date and pause/resume/cancel work', () => {
     const r = useBookingStore.getState().createRecurring('pnd-1', 'puja-satyanarayan', 'monthly', '2026-06-15T09:00:00.000Z');
     expect(r.nextDate).toBe('2026-07-15T09:00:00.000Z');

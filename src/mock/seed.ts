@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -164,4 +164,15 @@ export const seedBookings: Booking[] = [
 
 export const seedRecurring: RecurringSeries[] = [
   { id: 'rec-1', panditId: 'pnd-1', pujaId: 'puja-satyanarayan', interval: 'monthly', nextDate: '2026-07-15T09:00:00.000Z', status: 'active', generatedBookingIds: ['bkg-demo-1'], createdAt: '2026-05-15T09:00:00.000Z' },
+];
+
+export const seedThreads: ChatThread[] = [
+  { id: 'thr-1', bookingId: 'bkg-demo-2', panditId: 'pnd-1', phoneShared: false, messages: [
+    { id: 'm1', senderId: 'pnd-1', text: 'Namaste 🙏 I have accepted your Satyanarayan Katha booking.', sentAt: '2026-06-18T10:00:00.000Z' },
+    { id: 'm2', senderId: 'me', text: 'Thank you, Pandit ji. Looking forward to it.', sentAt: '2026-06-18T10:05:00.000Z' },
+  ] },
+  { id: 'thr-2', bookingId: 'bkg-demo-1', panditId: 'pnd-2', phoneShared: true, messages: [
+    { id: 'm3', senderId: 'me', text: 'Could you please bring the samagri?', sentAt: '2026-06-09T09:00:00.000Z' },
+    { id: 'm4', senderId: 'pnd-2', text: 'Yes, everything is arranged.', sentAt: '2026-06-09T09:10:00.000Z' },
+  ] },
 ];
