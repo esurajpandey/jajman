@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -106,4 +106,34 @@ export const seedReviews: Review[] = [
   { id: 'rev-8', panditId: 'pnd-5', jajmanName: 'Arjun Mehta', rating: 5, text: 'Conducted our marriage ceremony flawlessly.', date: '2026-05-18' },
   { id: 'rev-9', panditId: 'pnd-6', jajmanName: 'Kavya Reddy', rating: 4, text: 'Very devotional temple rituals, would book again.', date: '2026-04-05' },
   { id: 'rev-10', panditId: 'pnd-4', jajmanName: 'Naveen Kumar', rating: 4, text: 'Did the shradh respectfully and explained each step.', date: '2026-03-22' },
+];
+
+export const seedAddresses: Address[] = [
+  { id: 'addr-home', label: 'Home', type: 'home', line: '12 Tulsi Apartments, Kothrud', city: 'Pune', notes: 'Ring the bell twice' },
+  { id: 'addr-parents', label: "Parents' home", type: 'parents', line: '4 Shanti Nagar, Aundh', city: 'Pune' },
+  { id: 'addr-temple', label: 'Community temple', type: 'temple', line: 'Ganesh Mandir, FC Road', city: 'Pune' },
+];
+
+// One already-completed booking so the "pay remaining" screen is demoable before the Pandit surface exists.
+export const seedBookings: Booking[] = [
+  {
+    id: 'bkg-demo-1',
+    panditId: 'pnd-2',
+    pujaId: 'puja-ganesh',
+    type: 'single',
+    status: 'completed',
+    pujaStartISO: '2026-06-10T09:00:00.000Z',
+    slotLabel: '10 Jun · 09:00 AM',
+    addressId: 'addr-home',
+    attachments: [],
+    notes: '',
+    isEmergency: false,
+    charges: { base: 800, travel: 160, emergencySurcharge: 0, subtotal: 960 },
+    advanceAmount: 288,
+    remainingAmount: 672,
+    amountPaid: 288,
+    createdAt: '2026-06-01T09:00:00.000Z',
+    requestExpiresAt: '2026-06-02T09:00:00.000Z',
+    isDisputed: false,
+  },
 ];

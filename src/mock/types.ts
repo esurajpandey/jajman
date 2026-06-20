@@ -1,3 +1,5 @@
+import type { BookingStatus } from '../domain/types';
+
 export interface Category {
   id: string;
   name: string;
@@ -52,4 +54,54 @@ export interface PanditSummary {
   supportedPujas: SupportedPuja[];
   serviceRadiusKm: number;
   travelPreference: TravelPreference;
+}
+
+export type AddressType = 'home' | 'parents' | 'relative' | 'temple' | 'custom';
+export interface Address {
+  id: string;
+  label: string;
+  type: AddressType;
+  line: string;
+  city: string;
+  notes?: string;
+}
+
+export type AttachmentKind = 'image' | 'doc' | 'note';
+export interface BookingAttachment {
+  id: string;
+  kind: AttachmentKind;
+  name: string;
+}
+
+export interface BookingCharges {
+  base: number;
+  travel: number;
+  emergencySurcharge: number;
+  subtotal: number;
+}
+
+export type BookingType = 'single' | 'multi';
+export type AssignmentMode = 'build' | 'lead';
+
+export interface Booking {
+  id: string;
+  panditId: string; // single: the pandit; multi: the lead
+  pujaId: string;
+  type: BookingType;
+  assignmentMode?: AssignmentMode;
+  teamPanditIds?: string[];
+  status: BookingStatus;
+  pujaStartISO: string;
+  slotLabel: string;
+  addressId: string;
+  attachments: BookingAttachment[];
+  notes: string;
+  isEmergency: boolean;
+  charges: BookingCharges;
+  advanceAmount: number;
+  remainingAmount: number;
+  amountPaid: number;
+  createdAt: string;
+  requestExpiresAt: string;
+  isDisputed: boolean;
 }
