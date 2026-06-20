@@ -1,4 +1,5 @@
 import { Moon, Sun } from 'lucide-react';
+import { useShallow } from 'zustand/react/shallow';
 import { AppBar } from '../../components/ui/AppBar';
 import { SearchBar } from '../../components/ui/SearchBar';
 import { CategoryChip } from '../../components/ui/CategoryChip';
@@ -10,7 +11,7 @@ import { useUiStore } from '../../store/uiStore';
 
 export function HomeScreen() {
   const categories = useDataStore((s) => s.categories);
-  const pandits = useDataStore((s) => s.pandits).filter((p) => p.status === 'approved');
+  const pandits = useDataStore(useShallow((s) => s.getApprovedPandits()));
   const theme = useUiStore((s) => s.theme);
   const toggleTheme = useUiStore((s) => s.toggleTheme);
 

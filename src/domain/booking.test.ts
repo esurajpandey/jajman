@@ -38,6 +38,9 @@ describe('panditTab (§0.2)', () => {
   it('today for a live booking whose start is in the past but not yet completed', () => {
     expect(panditTab('in_progress', '2026-06-19T15:00:00.000Z', now)).toBe('today');
   });
+  it("in_progress always maps to today, even with a future-day start", () => {
+    expect(panditTab('in_progress', '2026-06-25T15:00:00.000Z', '2026-06-20T09:00:00.000Z')).toBe('today');
+  });
 });
 
 describe('computeRequestExpiry (§0.7)', () => {

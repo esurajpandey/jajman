@@ -29,8 +29,6 @@ export function jajmanTab(status: BookingStatus): JajmanBookingTab {
   }
 }
 
-const LIVE_PANDIT_STATUSES: BookingStatus[] = ['accepted', 'advance_paid', 'scheduled', 'in_progress'];
-
 /**
  * §0.2 — Pandit bookings tab. Returns null for statuses that belong in
  * Requests history (expired/rejected/etc.) rather than a live bookings tab.
@@ -41,12 +39,13 @@ export function panditTab(
   nowISO: string,
 ): PanditBookingTab | null {
   if (status === 'completed' || status === 'rated') return 'completed';
-  if (LIVE_PANDIT_STATUSES.includes(status)) {
+  if (status === 'in_progress') return 'today';
+  if (status === 'accepted' || status === 'advance_paid' || status === 'scheduled') {
     const now = dayjs(nowISO);
     const start = dayjs(pujaStartISO);
     if (start.isSame(now, 'day')) return 'today';
     if (start.isAfter(now)) return 'upcoming';
-    return 'today'; // past-but-not-completed still needs action today
+    return 'today'; // past-but-not-started edge: surface for action today
   }
   return null;
 }
