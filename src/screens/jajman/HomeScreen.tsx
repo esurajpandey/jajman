@@ -1,4 +1,5 @@
 import { Moon, Sun } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
 import { AppBar } from '../../components/ui/AppBar';
 import { SearchBar } from '../../components/ui/SearchBar';
@@ -9,6 +10,7 @@ import { useDataStore } from '../../store/dataStore';
 import { useUiStore } from '../../store/uiStore';
 
 export function HomeScreen() {
+  const navigate = useNavigate();
   const categories = useDataStore((s) => s.categories);
   const pandits = useDataStore(useShallow((s) => s.getApprovedPandits()));
   const theme = useUiStore((s) => s.theme);
@@ -38,22 +40,22 @@ export function HomeScreen() {
 
       <div className="pb-4">
         <div className="px-4 pt-3">
-          <SearchBar />
+          <SearchBar onClick={() => navigate('/app/search')} />
         </div>
 
         <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto px-4">
           {categories.map((c) => (
-            <CategoryChip key={c.id} label={c.name} icon={c.icon} />
+            <CategoryChip key={c.id} label={c.name} icon={c.icon} onClick={() => navigate('/app/category/' + c.id)} />
           ))}
         </div>
 
         <SectionHeader
           title="Featured Pandits"
-          action={<button type="button" className="text-xs font-medium text-primary">See all</button>}
+          action={<button type="button" onClick={() => navigate('/app/search')} className="text-xs font-medium text-primary">See all</button>}
         />
         <div className="flex flex-col gap-3 px-4">
           {pandits.map((p) => (
-            <PanditCard key={p.id} p={p} />
+            <PanditCard key={p.id} p={p} onClick={() => navigate('/app/pandit/' + p.id)} />
           ))}
         </div>
       </div>

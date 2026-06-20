@@ -1,5 +1,6 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 import { AppLayout } from '../components/shell/AppLayout';
+import { AppPlainLayout } from '../components/shell/AppPlainLayout';
 import { AuthLayout } from '../components/shell/AuthLayout';
 import { RequireAuth, RequireGuest } from './guards';
 import { RootRedirect } from './RootRedirect';
@@ -18,6 +19,13 @@ import { PermissionsScreen } from '../screens/auth/PermissionsScreen';
 import { ProfileSetupScreen } from '../screens/auth/ProfileSetupScreen';
 import { AdminLoginScreen } from '../screens/admin/AdminLoginScreen';
 import { HomeScreen } from '../screens/jajman/HomeScreen';
+import { SearchScreen } from '../screens/jajman/SearchScreen';
+import { MapScreen } from '../screens/jajman/MapScreen';
+import { CategoryBrowseScreen } from '../screens/jajman/CategoryBrowseScreen';
+import { PujaBrowseScreen } from '../screens/jajman/PujaBrowseScreen';
+import { PanditDetailScreen } from '../screens/jajman/PanditDetailScreen';
+import { ReviewsScreen } from '../screens/jajman/ReviewsScreen';
+import { AlternateSuggestionsScreen } from '../screens/jajman/AlternateSuggestionsScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -59,7 +67,25 @@ export const routes: RouteObject[] = [
         <AppLayout />
       </RequireAuth>
     ),
-    children: [{ path: '/app/home', element: <HomeScreen /> }],
+    children: [
+      { path: '/app/home', element: <HomeScreen /> },
+      { path: '/app/search', element: <SearchScreen /> },
+    ],
+  },
+  {
+    element: (
+      <RequireAuth>
+        <AppPlainLayout />
+      </RequireAuth>
+    ),
+    children: [
+      { path: '/app/map', element: <MapScreen /> },
+      { path: '/app/category/:categoryId', element: <CategoryBrowseScreen /> },
+      { path: '/app/puja/:pujaId', element: <PujaBrowseScreen /> },
+      { path: '/app/pandit/:panditId', element: <PanditDetailScreen /> },
+      { path: '/app/pandit/:panditId/reviews', element: <ReviewsScreen /> },
+      { path: '/app/alternate', element: <AlternateSuggestionsScreen /> },
+    ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
 ];
