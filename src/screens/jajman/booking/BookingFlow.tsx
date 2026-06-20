@@ -21,6 +21,8 @@ export function BookingFlow() {
   const { panditId = '' } = useParams();
   const [params] = useSearchParams();
   const isEmergency = params.get('urgent') === '1';
+  const teamParam = params.get('team') || '';
+  const modeParam = params.get('mode'); // 'build' | 'lead' | null
 
   const pandit = useDataStore((s) => s.getPandit(panditId));
   const pujas = useDataStore((s) => s.pujas);
@@ -34,8 +36,14 @@ export function BookingFlow() {
   const slotBaseISO = dayjs().startOf('day').add(isEmergency ? 0 : 1, 'day').toISOString();
 
   useEffect(() => {
-    startDraft(panditId, { isEmergency, type: 'single' });
-  }, [panditId, isEmergency, startDraft]);
+    const team = teamParam ? teamParam.split(',').filter(Boolean) : [];
+    startDraft(panditId, {
+      isEmergency,
+      type: modeParam ? 'multi' : 'single',
+      assignmentMode: modeParam === 'build' || modeParam === 'lead' ? modeParam : undefined,
+      teamPanditIds: team,
+    });
+  }, [panditId, isEmergency, teamParam, modeParam, startDraft]);
 
   if (!pandit || !draft) {
     return <><AppBar title="Book" left={<BackButton />} /><div className="flex-1 p-6 text-sm text-muted">Loading…</div></>;
@@ -126,6 +134,11 @@ export function BookingFlow() {
               <p className="text-muted">{addresses.find((a) => a.id === draft.addressId)?.label}</p>
               {draft.isEmergency && <p className="mt-1 text-error">Urgent · same-day surcharge applies</p>}
             </div>
+            {draft.type === 'multi' && (
+              <p className="rounded-md bg-surface-2 p-2 text-xs text-muted">
+                Multi-pandit · {draft.assignmentMode === 'lead' ? 'lead brings the team' : `${draft.teamPanditIds.length + 1} pandits`}
+              </p>
+            )}
             <MoneyBreakdown charges={{ base: charges.base, travel: charges.travel, emergencySurcharge: charges.emergencySurcharge, subtotal: charges.subtotal }} advance={charges.advance} remaining={charges.remaining} />
             <p className="text-xs text-muted">You'll pay the advance after the pandit accepts (within 24h). The advance is an estimate and is confirmed on acceptance.</p>
           </div>

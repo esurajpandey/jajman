@@ -43,6 +43,11 @@ export function HomeScreen() {
           <SearchBar onClick={() => navigate('/app/search')} />
         </div>
 
+        <div className="mt-3 flex gap-2 px-4">
+          <button type="button" onClick={() => navigate('/app/urgent')} className="flex-1 rounded-md border border-error/30 bg-error/5 px-3 py-2 text-xs font-medium text-error">⚡ Urgent booking</button>
+          <button type="button" onClick={() => navigate('/app/multi-pandit')} className="flex-1 rounded-md border border-border px-3 py-2 text-xs font-medium">👥 Multi-pandit puja</button>
+        </div>
+
         <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto px-4">
           {categories.map((c) => (
             <CategoryChip key={c.id} label={c.name} icon={c.icon} onClick={() => navigate('/app/category/' + c.id)} />

@@ -26,6 +26,12 @@ import { PujaBrowseScreen } from '../screens/jajman/PujaBrowseScreen';
 import { PanditDetailScreen } from '../screens/jajman/PanditDetailScreen';
 import { ReviewsScreen } from '../screens/jajman/ReviewsScreen';
 import { AlternateSuggestionsScreen } from '../screens/jajman/AlternateSuggestionsScreen';
+import { BookingFlow } from '../screens/jajman/booking/BookingFlow';
+import { RequestSentScreen } from '../screens/jajman/booking/RequestSentScreen';
+import { BookingDetailScreen } from '../screens/jajman/booking/BookingDetailScreen';
+import { PaymentScreen } from '../screens/jajman/booking/PaymentScreen';
+import { MultiPanditScreen } from '../screens/jajman/booking/MultiPanditScreen';
+import { EmergencyEntryScreen } from '../screens/jajman/booking/EmergencyEntryScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -85,6 +91,12 @@ export const routes: RouteObject[] = [
       { path: '/app/pandit/:panditId', element: <PanditDetailScreen /> },
       { path: '/app/pandit/:panditId/reviews', element: <ReviewsScreen /> },
       { path: '/app/alternate', element: <AlternateSuggestionsScreen /> },
+      { path: '/app/book/:panditId', element: <BookingFlow /> },
+      { path: '/app/booking/:bookingId/sent', element: <RequestSentScreen /> },
+      { path: '/app/booking/:bookingId', element: <BookingDetailScreen /> },
+      { path: '/app/booking/:bookingId/pay/:kind', element: <PaymentScreen /> },
+      { path: '/app/multi-pandit', element: <MultiPanditScreen /> },
+      { path: '/app/urgent', element: <EmergencyEntryScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
