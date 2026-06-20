@@ -24,4 +24,14 @@ describe('uiStore', () => {
     useUiStore.getState().setLanguage('hi');
     expect(useUiStore.getState().language).toBe('hi');
   });
+
+  it('setTheme sets the theme directly', () => {
+    useUiStore.getState().setTheme('dark');
+    expect(useUiStore.getState().theme).toBe('dark');
+  });
+
+  it('setConnectivity sets the connectivity sim', () => {
+    useUiStore.getState().setConnectivity('offline');
+    expect(useUiStore.getState().connectivitySim).toBe('offline');
+  });
 });

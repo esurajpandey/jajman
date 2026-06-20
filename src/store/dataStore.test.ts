@@ -1,5 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { useDataStore } from './dataStore';
+import { seedCategories, seedPujas, seedPandits } from '../mock/seed';
+
+beforeEach(() => {
+  useDataStore.setState({ categories: seedCategories, pujas: seedPujas, pandits: seedPandits });
+});
 
 describe('dataStore', () => {
   it('seeds the 7 PRD categories', () => {
