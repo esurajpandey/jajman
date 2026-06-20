@@ -3,7 +3,7 @@ import { useUiStore } from './uiStore';
 
 describe('uiStore', () => {
   beforeEach(() => {
-    useUiStore.setState({ theme: 'light', language: 'en', connectivitySim: 'online' });
+    useUiStore.setState({ theme: 'light', language: 'en', connectivitySim: 'online', languageChosen: false });
   });
 
   it('defaults to light/en/online', () => {

@@ -40,7 +40,7 @@ export function LanguageScreen() {
       <div className="mt-auto pt-6">
         <button
           type="button"
-          onClick={() => navigate('/auth/welcome')}
+          onClick={() => { chooseLanguage(language); navigate('/auth/welcome'); }}
           className="h-12 w-full rounded-md bg-primary font-medium text-primary-fg"
         >
           Continue
