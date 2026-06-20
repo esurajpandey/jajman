@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BottomSheet } from '../ui/BottomSheet';
 import { Chip } from '../ui/Chip';
 import { Button } from '../ui/Button';
@@ -16,7 +16,10 @@ export function FiltersSheet({ open, onClose }: { open: boolean; onClose: () => 
   const setFilters = useDiscoveryStore((s) => s.setFilters);
   const [draft, setDraft] = useState<DiscoveryFilters>(committed);
 
-  // re-sync the draft whenever the sheet (re)opens
+  useEffect(() => {
+    if (open) setDraft(committed);
+  }, [open]); // re-sync the draft from committed filters each time the sheet opens
+
   const patch = (p: Partial<DiscoveryFilters>) => setDraft((d) => ({ ...d, ...p }));
   const toggle = <K extends keyof DiscoveryFilters>(key: K, value: DiscoveryFilters[K]) =>
     patch({ [key]: draft[key] === value ? null : value } as Partial<DiscoveryFilters>);
