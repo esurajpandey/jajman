@@ -52,6 +52,7 @@ import { BecomePanditScreen } from '../screens/jajman/profile/BecomePanditScreen
 import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen';
 import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
+import { RaiseDisputeScreen } from '../screens/jajman/comms/RaiseDisputeScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -119,6 +120,7 @@ export const routes: RouteObject[] = [
       { path: '/app/booking/:bookingId', element: <BookingDetailScreen /> },
       { path: '/app/booking/:bookingId/pay/:kind', element: <PaymentScreen /> },
       { path: '/app/booking/:bookingId/rate', element: <RatePanditScreen /> },
+      { path: '/app/booking/:bookingId/dispute/new', element: <RaiseDisputeScreen /> },
       { path: '/app/recurring', element: <ManageRecurringScreen /> },
       { path: '/app/multi-pandit', element: <MultiPanditScreen /> },
       { path: '/app/urgent', element: <EmergencyEntryScreen /> },

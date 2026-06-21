@@ -105,6 +105,15 @@ export function BookingDetailScreen() {
             Message pandit
           </Button>
         )}
+        {['scheduled', 'in_progress', 'completed', 'rated'].includes(booking.status) && (
+          <button
+            type="button"
+            onClick={() => navigate(`/app/booking/${booking.id}/dispute/new`)}
+            className="mt-3 w-full rounded-md border border-error/30 px-3 py-2 text-sm font-medium text-error"
+          >
+            Raise a dispute
+          </button>
+        )}
       </div>
 
       <CancelSheet
