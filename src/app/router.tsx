@@ -9,6 +9,7 @@ import { RootRedirect } from './RootRedirect';
 import { NotFound } from '../screens/shared/NotFound';
 import { AppBar } from '../components/ui/AppBar';
 import { PanditDashboardScreen } from '../screens/pandit/PanditDashboardScreen';
+import { RequestsScreen } from '../screens/pandit/RequestsScreen';
 import { PendingApprovalScreen } from '../screens/pandit/PendingApprovalScreen';
 import { RejectedScreen } from '../screens/pandit/RejectedScreen';
 import { SplashScreen } from '../screens/auth/SplashScreen';
@@ -189,7 +190,7 @@ export const routes: RouteObject[] = [
       { path: '/pandit/pending-approval', element: <PendingApprovalScreen /> },
       { path: '/pandit/rejected', element: <RejectedScreen /> },
       { path: '/pandit/dashboard', element: <RequirePanditApproved><PanditDashboardScreen /></RequirePanditApproved> },
-      { path: '/pandit/requests', element: <RequirePanditApproved><PanditStub title="Requests" /></RequirePanditApproved> },
+      { path: '/pandit/requests', element: <RequirePanditApproved><RequestsScreen /></RequirePanditApproved> },
       { path: '/pandit/calendar', element: <RequirePanditApproved><PanditStub title="Calendar" /></RequirePanditApproved> },
       { path: '/pandit/earnings', element: <RequirePanditApproved><PanditStub title="Earnings" /></RequirePanditApproved> },
       { path: '/pandit/profile', element: <PanditStub title="Pandit profile" /> },
