@@ -194,3 +194,45 @@ export interface FaqEntry {
   question: string;
   answer: string;
 }
+
+// --- P3a: pandit onboarding ---
+export type PanditVerifyState = 'incomplete' | 'pending' | 'approved' | 'rejected';
+
+export interface OnboardingSupportedPuja { pujaId: string; charge: number; durationMins: number; notes?: string; }
+export interface OnboardingCustomPuja {
+  id: string; name: string; categoryId: string; description: string;
+  charge: number; additionalCharge: number; durationMins: number; isCustom: true;
+}
+export interface OnboardingDoc { id: string; label: string; name: string; }
+export interface OnboardingRecurring { weekday: number; start: string; end: string; } // weekday 0=Sun..6=Sat
+export interface OnboardingSlot { id: string; date: string; start: string; end: string; }
+
+export interface OnboardingProfile {
+  name: string; about: string; experienceYears: number;
+  languages: string[]; specializations: string[]; city: string;
+}
+export interface OnboardingService {
+  radiusKm: number; travelPreference: 'within' | 'outside' | 'anywhere';
+  chargeForTravel: boolean; baseTravelFee: number; perKmRate: number;
+}
+export interface PanditOnboardingDraft {
+  step: number; // furthest step reached, 0-based across the 5 steps
+  profile: OnboardingProfile;
+  service: OnboardingService;
+  supportedPujas: OnboardingSupportedPuja[];
+  customPujas: OnboardingCustomPuja[];
+  documents: OnboardingDoc[];
+  availability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[] };
+}
+export interface PanditSelfProfile {
+  userId: string;
+  status: PanditVerifyState;
+  submittedAt: string;
+  rejectionReason?: string;
+  profile: OnboardingProfile;
+  service: OnboardingService;
+  supportedPujas: OnboardingSupportedPuja[];
+  customPujas: OnboardingCustomPuja[];
+  documents: OnboardingDoc[];
+  availability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[] };
+}

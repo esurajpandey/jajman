@@ -77,3 +77,15 @@ describe('profile + notification prefs (P2b)', () => {
     expect(useSessionStore.getState().notificationPrefs.promotions).toBe(true);
   });
 });
+
+describe('setPanditStatus (P3a)', () => {
+  beforeEach(() => {
+    useSessionStore.setState(useSessionStore.getInitialState());
+    useSessionStore.getState().setPendingPhone('9999999999');
+    useSessionStore.getState().verifyOtp('123456');
+  });
+  it('updates panditStatus', () => {
+    useSessionStore.getState().setPanditStatus('approved');
+    expect(useSessionStore.getState().panditStatus).toBe('approved');
+  });
+});

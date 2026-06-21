@@ -56,6 +56,7 @@ interface SessionState {
   completeProfile: (patch?: Partial<SessionUser>) => void;
   updateProfile: (patch: Partial<SessionUser>) => void;
   setNotificationPref: (key: keyof NotificationPrefs, value: boolean) => void;
+  setPanditStatus: (status: PanditStatus) => void;
   logout: () => void;
 }
 
@@ -120,6 +121,8 @@ export const useSessionStore = create<SessionState>((set, get) => ({
 
   setNotificationPref: (key, value) =>
     set((s) => ({ notificationPrefs: { ...s.notificationPrefs, [key]: value } })),
+
+  setPanditStatus: (panditStatus) => set({ panditStatus }),
 
   logout: () =>
     set({
