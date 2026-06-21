@@ -2,9 +2,15 @@ import { createBrowserRouter, type RouteObject } from 'react-router-dom';
 import { AppLayout } from '../components/shell/AppLayout';
 import { AppPlainLayout } from '../components/shell/AppPlainLayout';
 import { AuthLayout } from '../components/shell/AuthLayout';
+import { PanditLayout } from '../components/shell/PanditLayout';
 import { RequireAuth, RequireGuest } from './guards';
+import { RequirePanditApproved } from './panditGuards';
 import { RootRedirect } from './RootRedirect';
 import { NotFound } from '../screens/shared/NotFound';
+import { AppBar } from '../components/ui/AppBar';
+import { PanditDashboardScreen } from '../screens/pandit/PanditDashboardScreen';
+import { PendingApprovalScreen } from '../screens/pandit/PendingApprovalScreen';
+import { RejectedScreen } from '../screens/pandit/RejectedScreen';
 import { SplashScreen } from '../screens/auth/SplashScreen';
 import { LanguageScreen } from '../screens/auth/LanguageScreen';
 import { WelcomeScreen } from '../screens/auth/WelcomeScreen';
@@ -146,7 +152,32 @@ export const routes: RouteObject[] = [
       { path: '/app/help', element: <HelpScreen /> },
     ],
   },
+  {
+    element: (
+      <RequireAuth>
+        <PanditLayout />
+      </RequireAuth>
+    ),
+    children: [
+      { path: '/pandit/pending-approval', element: <PendingApprovalScreen /> },
+      { path: '/pandit/rejected', element: <RejectedScreen /> },
+      { path: '/pandit/dashboard', element: <RequirePanditApproved><PanditDashboardScreen /></RequirePanditApproved> },
+      { path: '/pandit/requests', element: <RequirePanditApproved><PanditStub title="Requests" /></RequirePanditApproved> },
+      { path: '/pandit/calendar', element: <RequirePanditApproved><PanditStub title="Calendar" /></RequirePanditApproved> },
+      { path: '/pandit/earnings', element: <RequirePanditApproved><PanditStub title="Earnings" /></RequirePanditApproved> },
+      { path: '/pandit/profile', element: <PanditStub title="Pandit profile" /> },
+    ],
+  },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
 ];
+
+function PanditStub({ title }: { title: string }) {
+  return (
+    <>
+      <AppBar title={title} />
+      <div className="flex flex-1 items-center justify-center p-8 text-center text-sm text-muted">{title} arrives in a later P3 phase.</div>
+    </>
+  );
+}
 
 export const router = createBrowserRouter(routes);
