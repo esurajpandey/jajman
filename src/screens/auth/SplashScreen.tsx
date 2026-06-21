@@ -23,7 +23,7 @@ export function SplashScreen() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-3 bg-gradient-to-b from-primary/15 to-bg">
       <div className="text-6xl" aria-hidden="true">ॐ</div>
-      <h1 className="text-2xl font-bold text-primary">Pandit Seva</h1>
+      <h1 className="text-2xl font-bold text-primary">BookMyPanditji</h1>
       <p className="text-sm text-muted">Book trusted pandits for every occasion</p>
     </div>
   );

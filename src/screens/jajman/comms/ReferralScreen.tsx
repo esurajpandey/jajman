@@ -28,7 +28,7 @@ export function ReferralScreen() {
         <div className="mb-4 rounded-lg bg-secondary/10 p-4 text-center">
           <Gift size={28} className="mx-auto text-secondary" />
           <h2 className="mt-2 font-semibold">Invite friends, earn rewards</h2>
-          <p className="text-sm text-muted">Share Pandit Seva with family and friends.</p>
+          <p className="text-sm text-muted">Share BookMyPanditji with family and friends.</p>
         </div>
 
         <SegmentedControl<ReferralType>

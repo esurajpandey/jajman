@@ -32,7 +32,7 @@ describe('auth flow', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Verify & continue' }));
 
     // Role select -> continue -> permissions -> profile setup -> home
-    await screen.findByText(/How will you use Pandit Seva/);
+    await screen.findByText(/How will you use BookMyPanditji/);
     fireEvent.click(screen.getByRole('button', { name: 'Continue' }));
     await screen.findByText(/A couple of permissions/);
     fireEvent.click(screen.getByRole('button', { name: 'Allow & continue' }));

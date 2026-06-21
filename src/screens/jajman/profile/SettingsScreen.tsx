@@ -42,7 +42,7 @@ export function SettingsScreen() {
         </button>
 
         <SectionTitle>About</SectionTitle>
-        <div className="rounded-md border border-border bg-surface px-3 py-3 text-sm text-muted">Pandit Seva · v0.0.0 (prototype)</div>
+        <div className="rounded-md border border-border bg-surface px-3 py-3 text-sm text-muted">BookMyPanditji · v0.0.0 (prototype)</div>
 
         <SectionTitle>Account</SectionTitle>
         <Button variant="outline" className="mt-1 w-full border-error text-error" onClick={() => { logout(); navigate('/', { replace: true }); }}>

@@ -38,7 +38,7 @@ export function RoleSelectScreen() {
 
   return (
     <div className="flex flex-1 flex-col p-6">
-      <h1 className="text-xl font-bold">How will you use Pandit Seva?</h1>
+      <h1 className="text-xl font-bold">How will you use BookMyPanditji?</h1>
       <p className="mt-1 text-sm text-muted">You can switch modes anytime later.</p>
       <div className="mt-6 flex flex-col gap-3">
         {opt('jajman', <HeartHandshake size={22} />, 'Book pandits (Jajman)', 'Find and book pandits for your pujas and ceremonies.')}
