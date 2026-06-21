@@ -12,6 +12,19 @@ beforeEach(() => {
 });
 
 describe('OnbPujasScreen', () => {
+  it('charge field does not leak between different pujas', () => {
+    render(<MemoryRouter><OnbPujasScreen /></MemoryRouter>);
+    // Add first puja with charge 1500
+    fireEvent.click(screen.getAllByRole('button', { name: /Add/ })[0]); // opens sheet for first puja
+    fireEvent.change(screen.getByLabelText('Your charge (₹)'), { target: { value: '1500' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Add this puja' }));
+    // After adding puja A: its card now shows "Added" button; remaining pujas show "Add"
+    // getAllByRole with /Add/ returns ["Added" (puja A), "Add" (puja B), "Add" (puja C)...]
+    // Index 1 is the first remaining "Add" button (puja B)
+    fireEvent.click(screen.getAllByRole('button', { name: /Add/ })[1]);
+    expect(screen.getByLabelText('Your charge (₹)')).toHaveValue('');
+  });
+
   it('adds a puja via the charge sheet and enables continue', () => {
     render(<MemoryRouter><OnbPujasScreen /></MemoryRouter>);
     expect(screen.getByRole('button', { name: 'Save & continue' })).toBeDisabled();

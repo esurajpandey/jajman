@@ -71,6 +71,7 @@ export function OnbPujasScreen() {
       </div>
 
       <PujaChargeSheet
+        key={sheetPuja?.id ?? 'none'}
         puja={sheetPuja}
         open={sheetPuja !== null}
         onClose={() => setSheetPuja(null)}
