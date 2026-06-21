@@ -240,6 +240,38 @@ export interface PanditSelfProfile {
   availability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[] };
 }
 
+// --- P3d: pandit money ---
+export type TxnType = 'earning' | 'commission' | 'withdrawal' | 'refund';
+export interface WalletTxn {
+  id: string;
+  type: TxnType;
+  amount: number;        // signed: + credit to pandit, − debit
+  bookingId?: string;
+  withdrawalId?: string;
+  note: string;
+  createdAt: string;     // ISO
+}
+
+export type WithdrawalStatus = 'requested' | 'processing' | 'paid' | 'failed';
+export interface Withdrawal {
+  id: string;
+  amount: number;
+  bankId: string;
+  status: WithdrawalStatus;
+  createdAt: string;     // ISO
+  timeline: { status: WithdrawalStatus; at: string }[];
+  failReason?: string;
+}
+
+export interface BankAccount {
+  id: string;
+  holderName: string;
+  accountNumberMasked: string;  // '••••3421'
+  ifsc: string;
+  bankName: string;
+  isDefault: boolean;
+}
+
 // --- P3c: leave ---
 export type LeaveType = 'vacation' | 'festival' | 'personal';
 export interface PanditLeave {

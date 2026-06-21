@@ -23,6 +23,7 @@ export interface PricingConfig {
   emergencySurchargePct: number;
   emergencyBufferMins: number;
   cancellationLeadMins: number;
+  platformCommissionPct: number;
 }
 
 export const defaultPricingConfig: PricingConfig = {
@@ -31,4 +32,5 @@ export const defaultPricingConfig: PricingConfig = {
   emergencySurchargePct: 20,
   emergencyBufferMins: 60,
   cancellationLeadMins: 120,
+  platformCommissionPct: 12,
 };

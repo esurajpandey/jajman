@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread, AppNotification, Dispute, ReferralRecord, OnboardingRecurring, OnboardingSlot, PanditLeave } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread, AppNotification, Dispute, ReferralRecord, OnboardingRecurring, OnboardingSlot, PanditLeave, BankAccount, Withdrawal } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -271,6 +271,36 @@ export const seedPanditBookings: Booking[] = [
     createdAt: '2026-06-20T09:00:00.000Z', requestExpiresAt: '2026-06-21T09:00:00.000Z', isDisputed: false,
     jajmanName: 'Priya Nair',
   },
+  { id: 'pmoney-1', panditId: SELF_PANDIT_ID, pujaId: 'puja-ganesh', type: 'single', status: 'completed',
+    pujaStartISO: '2026-02-12T09:00:00.000Z', slotLabel: '12 Feb · 09:00 AM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1800, travel: 120, emergencySurcharge: 0, subtotal: 1920 },
+    advanceAmount: 576, remainingAmount: 1344, amountPaid: 1920,
+    createdAt: '2026-02-01T09:00:00.000Z', requestExpiresAt: '2026-02-02T09:00:00.000Z', isDisputed: false, jajmanName: 'Anita Kulkarni' },
+  { id: 'pmoney-2', panditId: SELF_PANDIT_ID, pujaId: 'puja-satyanarayan', type: 'single', status: 'rated',
+    pujaStartISO: '2026-03-08T10:00:00.000Z', slotLabel: '8 Mar · 10:00 AM', addressId: 'addr-temple',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1500, travel: 80, emergencySurcharge: 0, subtotal: 1580 },
+    advanceAmount: 474, remainingAmount: 1106, amountPaid: 1580,
+    createdAt: '2026-02-26T09:00:00.000Z', requestExpiresAt: '2026-02-27T09:00:00.000Z', isDisputed: false, jajmanName: 'Rohit Deshpande' },
+  { id: 'pmoney-3', panditId: SELF_PANDIT_ID, pujaId: 'puja-mahamrityunjaya', type: 'single', status: 'completed',
+    pujaStartISO: '2026-04-19T07:00:00.000Z', slotLabel: '19 Apr · 07:00 AM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 2100, travel: 210, emergencySurcharge: 0, subtotal: 2310 },
+    advanceAmount: 693, remainingAmount: 1617, amountPaid: 2310,
+    createdAt: '2026-04-05T09:00:00.000Z', requestExpiresAt: '2026-04-06T09:00:00.000Z', isDisputed: false, jajmanName: 'Lakshmi Iyer' },
+  { id: 'pmoney-4', panditId: SELF_PANDIT_ID, pujaId: 'puja-ganesh', type: 'single', status: 'rated',
+    pujaStartISO: '2026-05-22T16:00:00.000Z', slotLabel: '22 May · 04:00 PM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1800, travel: 120, emergencySurcharge: 0, subtotal: 1920 },
+    advanceAmount: 576, remainingAmount: 1344, amountPaid: 1920,
+    createdAt: '2026-05-08T09:00:00.000Z', requestExpiresAt: '2026-05-09T09:00:00.000Z', isDisputed: false, jajmanName: 'Vikram Sethi' },
+  { id: 'pmoney-5', panditId: SELF_PANDIT_ID, pujaId: 'puja-satyanarayan', type: 'single', status: 'completed',
+    pujaStartISO: '2026-06-09T09:00:00.000Z', slotLabel: '9 Jun · 09:00 AM', addressId: 'addr-temple',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1600, travel: 80, emergencySurcharge: 0, subtotal: 1680 },
+    advanceAmount: 504, remainingAmount: 1176, amountPaid: 1680,
+    createdAt: '2026-05-26T09:00:00.000Z', requestExpiresAt: '2026-05-27T09:00:00.000Z', isDisputed: false, jajmanName: 'Priya Nair' },
 ];
 
 export const seedPanditStats = {
@@ -280,6 +310,27 @@ export const seedPanditStats = {
   ratingAvg: 4.8,
   ratingCount: 64,
 };
+
+export const seedPanditBanks: BankAccount[] = [
+  { id: 'bank-1', holderName: 'Ramesh Sharma', accountNumberMasked: '••••3421', ifsc: 'HDFC0001234', bankName: 'HDFC Bank', isDefault: true },
+  { id: 'bank-2', holderName: 'Ramesh Sharma', accountNumberMasked: '••••8890', ifsc: 'SBIN0005678', bankName: 'State Bank of India', isDefault: false },
+];
+
+export const seedPanditWithdrawals: Withdrawal[] = [
+  { id: 'wd-1', amount: 5000, bankId: 'bank-1', status: 'paid', createdAt: '2026-05-15T09:00:00.000Z',
+    timeline: [
+      { status: 'requested', at: '2026-05-15T09:00:00.000Z' },
+      { status: 'processing', at: '2026-05-15T11:00:00.000Z' },
+      { status: 'paid', at: '2026-05-16T10:00:00.000Z' },
+    ] },
+  { id: 'wd-2', amount: 2000, bankId: 'bank-1', status: 'failed', createdAt: '2026-06-02T09:00:00.000Z',
+    failReason: 'Bank account verification failed — please re-check your IFSC.',
+    timeline: [
+      { status: 'requested', at: '2026-06-02T09:00:00.000Z' },
+      { status: 'processing', at: '2026-06-02T11:00:00.000Z' },
+      { status: 'failed', at: '2026-06-03T10:00:00.000Z' },
+    ] },
+];
 
 export const seedPanditAvailability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[]; leaves: PanditLeave[] } = {
   recurring: [
