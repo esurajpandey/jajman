@@ -13,8 +13,11 @@ import { DayAgenda } from '../../components/pandit/DayAgenda';
 import { usePanditAvailabilityStore } from '../../store/panditAvailabilityStore';
 import { usePanditBookingStore } from '../../store/panditBookingStore';
 import { useDataStore } from '../../store/dataStore';
+import type { Booking } from '../../mock/types';
 
 type View = 'month' | 'day';
+
+const LIVE_BOOKING: Booking['status'][] = ['accepted', 'advance_paid', 'scheduled', 'in_progress'];
 
 export function CalendarScreen() {
   const navigate = useNavigate();
@@ -31,17 +34,19 @@ export function CalendarScreen() {
   const isOnLeave = usePanditAvailabilityStore((s) => s.isOnLeave);
   const getPuja = useDataStore((s) => s.getPuja);
 
+  const liveBookings = bookings.filter((b) => LIVE_BOOKING.includes(b.status));
+
   // marks for the visible month
   const marks: Record<string, DayMark> = {};
   const mark = (iso: string, key: keyof DayMark) => { (marks[iso] ??= {})[key] = true; };
-  bookings.forEach((b) => mark(dayjs(b.pujaStartISO).format('YYYY-MM-DD'), 'booking'));
+  liveBookings.forEach((b) => mark(dayjs(b.pujaStartISO).format('YYYY-MM-DD'), 'booking'));
   slotsStore.forEach((s) => mark(s.date, 'slot'));
   leavesStore.forEach((l) => {
     let d = dayjs(l.fromDate); const end = dayjs(l.toDate ?? l.fromDate);
     while (d.isSame(end, 'day') || d.isBefore(end, 'day')) { mark(d.format('YYYY-MM-DD'), 'leave'); d = d.add(1, 'day'); }
   });
 
-  const dayBookings = bookings.filter((b) => dayjs(b.pujaStartISO).format('YYYY-MM-DD') === selected);
+  const dayBookings = liveBookings.filter((b) => dayjs(b.pujaStartISO).format('YYYY-MM-DD') === selected);
   const daySlots = getSlotsForDate(selected);
 
   return (
