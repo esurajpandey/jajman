@@ -46,9 +46,10 @@ export function ProfileScreen() {
     { icon: Star, label: 'My reviews', to: '/app/profile/reviews' },
     { icon: Bell, label: 'Notification preferences', to: '/app/profile/notifications' },
     { icon: Languages, label: 'Language', to: '/app/profile/language' },
-    { icon: Gift, label: 'Referral', badge: 'Soon', disabled: true },
-    { icon: ShieldAlert, label: 'Disputes', badge: 'Soon', disabled: true },
-    { icon: LifeBuoy, label: 'Help & Support', badge: 'Soon', disabled: true },
+    { icon: Bell, label: 'Notifications', to: '/app/notifications' },
+    { icon: Gift, label: 'Referral', to: '/app/referral' },
+    { icon: ShieldAlert, label: 'Disputes', to: '/app/disputes' },
+    { icon: LifeBuoy, label: 'Help & Support', to: '/app/help' },
     { icon: SettingsIcon, label: 'Settings', to: '/app/settings' },
   ];
 
