@@ -7,6 +7,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Avatar } from '../../components/ui/Avatar';
 import { CountdownChip } from '../../components/pandit/CountdownChip';
+import { RejectSheet } from '../../components/pandit/RejectSheet';
 import { usePanditBookingStore } from '../../store/panditBookingStore';
 import { useDataStore } from '../../store/dataStore';
 import { useBookingStore } from '../../store/bookingStore';
@@ -14,9 +15,11 @@ import { useBookingStore } from '../../store/bookingStore';
 export function RequestDetailScreen() {
   const navigate = useNavigate();
   const { id = '' } = useParams();
-  const [, setSearch] = useSearchParams();
+  const [searchParams, setSearch] = useSearchParams();
   const nowISO = new Date().toISOString();
   const request = usePanditBookingStore((s) => s.getRequest(id));
+  const reject = usePanditBookingStore((s) => s.reject);
+  const rejectOpen = searchParams.get('action') === 'reject';
   const puja = useDataStore((s) => s.getPuja(request?.pujaId ?? ''));
   const address = useBookingStore((s) => s.getAddress(request?.addressId ?? ''));
 
@@ -81,6 +84,11 @@ export function RequestDetailScreen() {
           </div>
         )}
       </div>
+      <RejectSheet
+        open={rejectOpen}
+        onClose={() => setSearch({})}
+        onConfirm={(reason) => { reject(request.id, reason); navigate('/pandit/requests', { replace: true }); }}
+      />
     </>
   );
 }
