@@ -1,4 +1,4 @@
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun, Bell } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
 import { AppBar } from '../../components/ui/AppBar';
@@ -8,6 +8,7 @@ import { SectionHeader } from '../../components/ui/SectionHeader';
 import { PanditCard } from '../../components/ui/PanditCard';
 import { useDataStore } from '../../store/dataStore';
 import { useUiStore } from '../../store/uiStore';
+import { useNotificationStore } from '../../store/notificationStore';
 
 export function HomeScreen() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export function HomeScreen() {
   const pandits = useDataStore(useShallow((s) => s.getApprovedPandits()));
   const theme = useUiStore((s) => s.theme);
   const toggleTheme = useUiStore((s) => s.toggleTheme);
+  const unread = useNotificationStore((s) => s.unreadCount());
 
   return (
     <>
@@ -27,14 +29,24 @@ export function HomeScreen() {
           </div>
         }
         right={
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="p-2 text-muted"
-          >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
+          <div className="flex items-center">
+            <button
+              type="button"
+              onClick={() => navigate('/app/notifications')}
+              aria-label="Notifications"
+              className="relative p-2 text-muted"
+            >
+              <Bell size={18} />
+              {unread > 0 && (
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold text-primary-fg">
+                  {unread}
+                </span>
+              )}
+            </button>
+            <button type="button" onClick={toggleTheme} aria-label="Toggle theme" className="p-2 text-muted">
+              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
+          </div>
         }
       />
 
