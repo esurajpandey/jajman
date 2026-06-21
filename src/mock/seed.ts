@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread, AppNotification, Dispute, ReferralRecord } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -176,4 +176,46 @@ export const seedThreads: ChatThread[] = [
     { id: 'm3', senderId: 'me', text: 'Could you please bring the samagri?', sentAt: '2026-06-09T09:00:00.000Z' },
     { id: 'm4', senderId: 'pnd-2', text: 'Yes, everything is arranged.', sentAt: '2026-06-09T09:10:00.000Z' },
   ] },
+];
+
+export const seedNotifications: AppNotification[] = [
+  { id: 'ntf-1', type: 'booking', title: 'Booking accepted', body: 'Pandit Ramesh Sharma accepted your Satyanarayan Katha.', read: false, createdAt: '2026-06-18T10:00:00.000Z', link: '/app/booking/bkg-demo-2' },
+  { id: 'ntf-2', type: 'payment', title: 'Advance paid', body: 'Your advance of ₹344 was received.', read: false, createdAt: '2026-06-18T10:05:00.000Z', link: '/app/booking/bkg-demo-2' },
+  { id: 'ntf-3', type: 'request', title: 'Request awaiting response', body: 'Your Maha Mrityunjaya Jaap request expires in 24h.', read: true, createdAt: '2026-06-20T08:00:00.000Z', link: '/app/booking/bkg-demo-3' },
+  { id: 'ntf-4', type: 'review', title: 'Rate your pandit', body: 'How was your Ganesh Puja with Pandit Anil Shastri?', read: true, createdAt: '2026-05-02T18:00:00.000Z', link: '/app/booking/bkg-demo-4/rate' },
+  { id: 'ntf-5', type: 'referral', title: 'Refer & earn', body: 'Invite friends and earn rewards (coming soon).', read: true, createdAt: '2026-04-30T09:00:00.000Z', link: '/app/referral' },
+];
+
+export const seedDisputes: Dispute[] = [
+  {
+    id: 'dsp-1', bookingId: 'bkg-demo-1', reasonCode: 'puja_incomplete',
+    description: 'Some rituals from the agreed scope were skipped during the puja.',
+    status: 'under_review', evidence: [{ id: 'ev-1', kind: 'image', name: 'photo-1.jpg' }],
+    activity: [{ from: 'admin', text: 'We are reviewing your dispute and have contacted the pandit.', at: '2026-06-12T09:00:00.000Z' }],
+    timeline: [
+      { status: 'open', at: '2026-06-11T09:00:00.000Z' },
+      { status: 'under_review', at: '2026-06-12T09:00:00.000Z' },
+    ],
+    createdAt: '2026-06-11T09:00:00.000Z',
+  },
+  {
+    id: 'dsp-2', bookingId: 'bkg-demo-4', reasonCode: 'payment_issue',
+    description: 'I was charged the remaining amount twice.',
+    status: 'resolved', evidence: [],
+    activity: [{ from: 'admin', text: 'Confirmed a duplicate charge; a partial refund has been issued.', at: '2026-05-06T09:00:00.000Z' }],
+    timeline: [
+      { status: 'open', at: '2026-05-04T09:00:00.000Z' },
+      { status: 'under_review', at: '2026-05-05T09:00:00.000Z' },
+      { status: 'resolved', at: '2026-05-06T09:00:00.000Z' },
+    ],
+    resolution: { type: 'refund_partial', note: 'Duplicate charge refunded.', refundAmount: 1110, resolvedAt: '2026-05-06T09:00:00.000Z' },
+    createdAt: '2026-05-04T09:00:00.000Z',
+  },
+];
+
+export const referralCode = 'SURAJ2026';
+export const seedReferrals: ReferralRecord[] = [
+  { id: 'ref-1', type: 'refer_jajman', inviteeName: 'Ananya G.', status: 'joined', createdAt: '2026-05-20T09:00:00.000Z' },
+  { id: 'ref-2', type: 'refer_pandit', inviteeName: 'Pandit Keshav', status: 'invited', createdAt: '2026-06-01T09:00:00.000Z' },
+  { id: 'ref-3', type: 'refer_jajman', inviteeName: 'Ravi M.', status: 'rewarded', rewardNote: '₹100 wallet credit', createdAt: '2026-04-15T09:00:00.000Z' },
 ];

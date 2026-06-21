@@ -140,3 +140,57 @@ export interface RecurringSeries {
   generatedBookingIds: string[];
   createdAt: string;
 }
+
+// --- P2c: notifications ---
+export type NotifType = 'booking' | 'payment' | 'request' | 'dispute' | 'system' | 'referral' | 'review';
+export interface AppNotification {
+  id: string;
+  type: NotifType;
+  title: string;
+  body: string;
+  read: boolean;
+  createdAt: string; // ISO
+  link?: string; // in-app route to deep-link to
+}
+
+// --- P2c: disputes ---
+export type DisputeStatus = 'open' | 'under_review' | 'resolved' | 'rejected';
+export type DisputeReason = 'pandit_no_show' | 'puja_incomplete' | 'quality_issue' | 'payment_issue' | 'other';
+export type DisputeResolutionType = 'refund_full' | 'refund_partial' | 'redo' | 'declined';
+export interface DisputeActivity {
+  from: 'you' | 'admin';
+  text: string;
+  at: string; // ISO
+}
+export interface Dispute {
+  id: string;
+  bookingId: string;
+  reasonCode: DisputeReason;
+  description: string;
+  status: DisputeStatus;
+  evidence: BookingAttachment[];
+  activity: DisputeActivity[];
+  timeline: { status: DisputeStatus; at: string }[];
+  resolution?: { type: DisputeResolutionType; note: string; refundAmount?: number; resolvedAt: string };
+  createdAt: string;
+}
+
+// --- P2c: referral ---
+export type ReferralType = 'refer_jajman' | 'refer_pandit';
+export type ReferralStatus = 'invited' | 'joined' | 'rewarded';
+export interface ReferralRecord {
+  id: string;
+  type: ReferralType;
+  inviteeName: string;
+  status: ReferralStatus;
+  rewardNote?: string;
+  createdAt: string; // ISO
+}
+
+// --- P2c: FAQ (static) ---
+export interface FaqEntry {
+  id: string;
+  topic: string;
+  question: string;
+  answer: string;
+}
