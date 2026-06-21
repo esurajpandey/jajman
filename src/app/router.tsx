@@ -53,6 +53,7 @@ import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen
 import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
 import { RaiseDisputeScreen } from '../screens/jajman/comms/RaiseDisputeScreen';
+import { ReferralScreen } from '../screens/jajman/comms/ReferralScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -140,6 +141,7 @@ export const routes: RouteObject[] = [
       { path: '/app/notifications', element: <NotificationsScreen /> },
       { path: '/app/disputes', element: <DisputesListScreen /> },
       { path: '/app/disputes/:disputeId', element: <DisputeDetailScreen /> },
+      { path: '/app/referral', element: <ReferralScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
