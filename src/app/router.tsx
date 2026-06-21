@@ -54,6 +54,7 @@ import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
 import { RaiseDisputeScreen } from '../screens/jajman/comms/RaiseDisputeScreen';
 import { ReferralScreen } from '../screens/jajman/comms/ReferralScreen';
+import { HelpScreen } from '../screens/jajman/comms/HelpScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -142,6 +143,7 @@ export const routes: RouteObject[] = [
       { path: '/app/disputes', element: <DisputesListScreen /> },
       { path: '/app/disputes/:disputeId', element: <DisputeDetailScreen /> },
       { path: '/app/referral', element: <ReferralScreen /> },
+      { path: '/app/help', element: <HelpScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
