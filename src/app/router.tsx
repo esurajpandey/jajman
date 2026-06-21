@@ -39,6 +39,8 @@ import { FavoritesScreen } from '../screens/jajman/FavoritesScreen';
 import { ProfileScreen } from '../screens/jajman/ProfileScreen';
 import { ConversationsListScreen } from '../screens/jajman/chat/ConversationsListScreen';
 import { ChatThreadScreen } from '../screens/jajman/chat/ChatThreadScreen';
+import { AddressesListScreen } from '../screens/jajman/profile/AddressesListScreen';
+import { AddressEditScreen } from '../screens/jajman/profile/AddressEditScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -111,6 +113,9 @@ export const routes: RouteObject[] = [
       { path: '/app/urgent', element: <EmergencyEntryScreen /> },
       { path: '/app/chat', element: <ConversationsListScreen /> },
       { path: '/app/chat/:threadId', element: <ChatThreadScreen /> },
+      { path: '/app/profile/addresses', element: <AddressesListScreen /> },
+      { path: '/app/profile/addresses/new', element: <AddressEditScreen /> },
+      { path: '/app/profile/addresses/:id/edit', element: <AddressEditScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },

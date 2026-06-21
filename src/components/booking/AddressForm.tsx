@@ -2,6 +2,7 @@ import { useId, useState } from 'react';
 import { TextField } from '../ui/TextField';
 import { Button } from '../ui/Button';
 import { Chip } from '../ui/Chip';
+import { ToggleRow } from '../ui/ToggleRow';
 import type { Address, AddressType } from '../../mock/types';
 
 const TYPES: { value: AddressType; label: string }[] = [
@@ -16,6 +17,7 @@ export function AddressForm({ initial, onSave, submitLabel = 'Save address' }: {
   const [line, setLine] = useState(initial?.line ?? '');
   const [city, setCity] = useState(initial?.city ?? '');
   const [notes, setNotes] = useState(initial?.notes ?? '');
+  const [isDefault, setIsDefault] = useState(initial?.isDefault ?? false);
   const valid = label.trim() && line.trim() && city.trim();
 
   return (
@@ -32,7 +34,8 @@ export function AddressForm({ initial, onSave, submitLabel = 'Save address' }: {
       <TextField id={`${fid}-notes`} label="Notes (optional)" name="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Parking, landmark…" />
       {/* Mock map pin — decorative for the prototype */}
       <div className="flex items-center justify-center rounded-md border border-dashed border-border bg-surface-2 py-6 text-xs text-muted">📍 Location pin (mock)</div>
-      <Button type="button" disabled={!valid} onClick={() => onSave({ label: label.trim(), type, line: line.trim(), city: city.trim(), notes: notes.trim() || undefined })}>{submitLabel}</Button>
+      <ToggleRow label="Set as default address" checked={isDefault} onChange={setIsDefault} />
+      <Button type="button" disabled={!valid} onClick={() => onSave({ label: label.trim(), type, line: line.trim(), city: city.trim(), notes: notes.trim() || undefined, isDefault })}>{submitLabel}</Button>
     </div>
   );
 }
