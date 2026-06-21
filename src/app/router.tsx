@@ -75,6 +75,7 @@ import { ReferralScreen } from '../screens/jajman/comms/ReferralScreen';
 import { HelpScreen } from '../screens/jajman/comms/HelpScreen';
 import { AvailabilityScreen } from '../screens/pandit/AvailabilityScreen';
 import { LeaveScreen } from '../screens/pandit/LeaveScreen';
+import { CalendarScreen } from '../screens/pandit/CalendarScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -197,7 +198,7 @@ export const routes: RouteObject[] = [
       { path: '/pandit/requests', element: <RequirePanditApproved><RequestsScreen /></RequirePanditApproved> },
       { path: '/pandit/requests/:id', element: <RequirePanditApproved><RequestDetailScreen /></RequirePanditApproved> },
       { path: '/pandit/requests/:id/accept', element: <RequirePanditApproved><AcceptRequestScreen /></RequirePanditApproved> },
-      { path: '/pandit/calendar', element: <RequirePanditApproved><PanditStub title="Calendar" /></RequirePanditApproved> },
+      { path: '/pandit/calendar', element: <RequirePanditApproved><CalendarScreen /></RequirePanditApproved> },
       { path: '/pandit/calendar/availability', element: <RequirePanditApproved><AvailabilityScreen /></RequirePanditApproved> },
       { path: '/pandit/calendar/leave', element: <RequirePanditApproved><LeaveScreen /></RequirePanditApproved> },
       { path: '/pandit/earnings', element: <RequirePanditApproved><PanditStub title="Earnings" /></RequirePanditApproved> },
