@@ -57,6 +57,8 @@ interface SessionState {
   updateProfile: (patch: Partial<SessionUser>) => void;
   setNotificationPref: (key: keyof NotificationPrefs, value: boolean) => void;
   setPanditStatus: (status: PanditStatus) => void;
+  acceptingBookings: boolean;
+  setAcceptingBookings: (v: boolean) => void;
   logout: () => void;
 }
 
@@ -73,6 +75,8 @@ export const useSessionStore = create<SessionState>((set, get) => ({
   pendingPhone: null,
   pendingName: null,
   notificationPrefs: defaultNotificationPrefs,
+  acceptingBookings: true,
+  setAcceptingBookings: (acceptingBookings) => set({ acceptingBookings }),
 
   setPendingPhone: (pendingPhone) => set({ pendingPhone }),
   setPendingName: (pendingName) => set({ pendingName }),

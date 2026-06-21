@@ -106,6 +106,9 @@ export interface Booking {
   createdAt: string;
   requestExpiresAt: string;
   isDisputed: boolean;
+  jajmanName?: string; // pandit-side display (single-jajman prototype)
+  additionalCharges?: { label: string; amount: number }[]; // added at acceptance (B4)
+  rejectionReason?: string; // pandit-rejected request reason (B5)
   cancellation?: {
     initiatedBy: 'jajman' | 'pandit';
     refundAmount: number;

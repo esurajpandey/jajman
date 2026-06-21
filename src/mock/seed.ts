@@ -219,3 +219,64 @@ export const seedReferrals: ReferralRecord[] = [
   { id: 'ref-2', type: 'refer_pandit', inviteeName: 'Pandit Keshav', status: 'invited', createdAt: '2026-06-01T09:00:00.000Z' },
   { id: 'ref-3', type: 'refer_jajman', inviteeName: 'Ravi M.', status: 'rewarded', rewardNote: '₹100 wallet credit', createdAt: '2026-04-15T09:00:00.000Z' },
 ];
+
+export const SELF_PANDIT_ID = 'pnd-self';
+
+// Incoming requests + active bookings for the logged-in (onboarded) pandit. Kept separate
+// from seedBookings (which is the Jajman's own bookings) so the two surfaces don't cross-contaminate.
+export const seedPanditBookings: Booking[] = [
+  { // urgent request, expiring soon (amber)
+    id: 'preq-1', panditId: SELF_PANDIT_ID, pujaId: 'puja-ganesh', type: 'single', status: 'requested',
+    pujaStartISO: '2026-06-21T15:00:00.000Z', slotLabel: '21 Jun · 03:00 PM', addressId: 'addr-home',
+    attachments: [], notes: 'Please bring samagri. Parking in basement.', isEmergency: true,
+    charges: { base: 1800, travel: 0, emergencySurcharge: 360, subtotal: 2160 },
+    advanceAmount: 648, remainingAmount: 1512, amountPaid: 0,
+    createdAt: '2026-06-21T05:00:00.000Z', requestExpiresAt: '2026-06-21T13:00:00.000Z', isDisputed: false,
+    jajmanName: 'Anita Kulkarni',
+  },
+  { // normal single request (normal tone)
+    id: 'preq-2', panditId: SELF_PANDIT_ID, pujaId: 'puja-satyanarayan', type: 'single', status: 'requested',
+    pujaStartISO: '2026-07-02T09:00:00.000Z', slotLabel: '2 Jul · 09:00 AM', addressId: 'addr-temple',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1500, travel: 0, emergencySurcharge: 0, subtotal: 1500 },
+    advanceAmount: 450, remainingAmount: 1050, amountPaid: 0,
+    createdAt: '2026-06-21T08:00:00.000Z', requestExpiresAt: '2026-06-22T08:00:00.000Z', isDisputed: false,
+    jajmanName: 'Rohit Deshpande',
+  },
+  { // multi-pandit (lead) request
+    id: 'preq-3', panditId: SELF_PANDIT_ID, pujaId: 'puja-mahamrityunjaya', type: 'multi', assignmentMode: 'lead',
+    teamPanditIds: ['pnd-3', 'pnd-6'], status: 'requested',
+    pujaStartISO: '2026-07-10T07:00:00.000Z', slotLabel: '10 Jul · 07:00 AM', addressId: 'addr-home',
+    attachments: [], notes: 'Yagna for housewarming.', isEmergency: false,
+    charges: { base: 2100, travel: 0, emergencySurcharge: 0, subtotal: 2100 },
+    advanceAmount: 630, remainingAmount: 1470, amountPaid: 0,
+    createdAt: '2026-06-21T07:30:00.000Z', requestExpiresAt: '2026-06-22T07:30:00.000Z', isDisputed: false,
+    jajmanName: 'Lakshmi Iyer',
+  },
+  { // already-scheduled booking happening "today" (for the dashboard)
+    id: 'pbkg-1', panditId: SELF_PANDIT_ID, pujaId: 'puja-ganesh', type: 'single', status: 'scheduled',
+    pujaStartISO: '2026-06-21T17:00:00.000Z', slotLabel: '21 Jun · 05:00 PM', addressId: 'addr-home',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1800, travel: 120, emergencySurcharge: 0, subtotal: 1920 },
+    advanceAmount: 576, remainingAmount: 1344, amountPaid: 576,
+    createdAt: '2026-06-18T09:00:00.000Z', requestExpiresAt: '2026-06-19T09:00:00.000Z', isDisputed: false,
+    jajmanName: 'Vikram Sethi',
+  },
+  { // upcoming accepted booking
+    id: 'pbkg-2', panditId: SELF_PANDIT_ID, pujaId: 'puja-satyanarayan', type: 'single', status: 'accepted',
+    pujaStartISO: '2026-07-05T10:00:00.000Z', slotLabel: '5 Jul · 10:00 AM', addressId: 'addr-temple',
+    attachments: [], notes: '', isEmergency: false,
+    charges: { base: 1500, travel: 80, emergencySurcharge: 0, subtotal: 1580 },
+    advanceAmount: 474, remainingAmount: 1106, amountPaid: 0,
+    createdAt: '2026-06-20T09:00:00.000Z', requestExpiresAt: '2026-06-21T09:00:00.000Z', isDisputed: false,
+    jajmanName: 'Priya Nair',
+  },
+];
+
+export const seedPanditStats = {
+  availableBalance: 12400,
+  pendingBalance: 1344,
+  monthEarnings: 38600,
+  ratingAvg: 4.8,
+  ratingCount: 64,
+};

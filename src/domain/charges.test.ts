@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeCharges, travelEstimate } from './charges';
+import { computeCharges, travelEstimate, acceptCharges } from './charges';
 
 describe('computeCharges', () => {
   it('no emergency: subtotal = base + travel, advance 30%', () => {
@@ -25,5 +25,20 @@ describe('travelEstimate', () => {
     expect(travelEstimate(0)).toBe(0);
     expect(travelEstimate(5)).toBeGreaterThan(0);
     expect(Number.isInteger(travelEstimate(7.3))).toBe(true);
+  });
+});
+
+describe('acceptCharges (B4 — base + travel + surcharge + additional)', () => {
+  it('sums travel and additional into the subtotal; advance is 30%', () => {
+    const c = acceptCharges(1000, 200, 300, false);
+    expect(c.subtotal).toBe(1500);
+    expect(c.additionalTotal).toBe(300);
+    expect(c.advance).toBe(450);
+    expect(c.remaining).toBe(1050);
+  });
+  it('adds a 20% emergency surcharge on base when urgent', () => {
+    const c = acceptCharges(1000, 0, 0, true);
+    expect(c.emergencySurcharge).toBe(200);
+    expect(c.subtotal).toBe(1200);
   });
 });

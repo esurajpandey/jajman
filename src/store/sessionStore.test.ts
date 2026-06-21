@@ -89,3 +89,12 @@ describe('setPanditStatus (P3a)', () => {
     expect(useSessionStore.getState().panditStatus).toBe('approved');
   });
 });
+
+describe('acceptingBookings toggle (P3b)', () => {
+  beforeEach(() => useSessionStore.setState(useSessionStore.getInitialState()));
+  it('defaults to true and toggles', () => {
+    expect(useSessionStore.getState().acceptingBookings).toBe(true);
+    useSessionStore.getState().setAcceptingBookings(false);
+    expect(useSessionStore.getState().acceptingBookings).toBe(false);
+  });
+});
