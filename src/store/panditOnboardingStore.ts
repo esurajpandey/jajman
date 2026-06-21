@@ -85,8 +85,12 @@ export const usePanditOnboardingStore = create<State>((set, get) => ({
     const d = get().draft;
     const profile: PanditSelfProfile = {
       userId, status: 'pending', submittedAt: nowISO,
-      profile: d.profile, service: d.service, supportedPujas: d.supportedPujas,
-      customPujas: d.customPujas, documents: d.documents, availability: d.availability,
+      profile: { ...d.profile },
+      service: { ...d.service },
+      supportedPujas: d.supportedPujas.map((x) => ({ ...x })),
+      customPujas: d.customPujas.map((x) => ({ ...x })),
+      documents: d.documents.map((x) => ({ ...x })),
+      availability: { recurring: d.availability.recurring.map((x) => ({ ...x })), slots: d.availability.slots.map((x) => ({ ...x })) },
     };
     set({ profile });
     return profile;

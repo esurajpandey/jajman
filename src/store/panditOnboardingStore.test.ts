@@ -45,6 +45,15 @@ describe('panditOnboardingStore', () => {
     expect(usePanditOnboardingStore.getState().profile?.status).toBe('pending');
   });
 
+  it('submit snapshot is immutable: post-submit draft mutations do not bleed into stored profile', () => {
+    const s = usePanditOnboardingStore.getState();
+    s.addSupportedPuja({ pujaId: 'puja-ganesh', charge: 800, durationMins: 90 });
+    s.submit('user-1', '2026-06-21T09:00:00.000Z');
+    const snapshotLength = usePanditOnboardingStore.getState().profile!.supportedPujas.length;
+    usePanditOnboardingStore.getState().addSupportedPuja({ pujaId: 'puja-lakshmi', charge: 999, durationMins: 90 });
+    expect(usePanditOnboardingStore.getState().profile!.supportedPujas).toHaveLength(snapshotLength);
+  });
+
   it('simulateApproval / simulateRejection update the snapshot status', () => {
     usePanditOnboardingStore.getState().submit('user-1', '2026-06-21T09:00:00.000Z');
     usePanditOnboardingStore.getState().simulateApproval();
