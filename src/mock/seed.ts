@@ -1,4 +1,4 @@
-import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread, AppNotification, Dispute, ReferralRecord } from './types';
+import type { Category, Puja, PanditSummary, Review, Address, Booking, RecurringSeries, ChatThread, AppNotification, Dispute, ReferralRecord, OnboardingRecurring, OnboardingSlot, PanditLeave } from './types';
 
 export const seedCategories: Category[] = [
   { id: 'cat-katha', name: 'Katha', icon: '📿' },
@@ -279,4 +279,19 @@ export const seedPanditStats = {
   monthEarnings: 38600,
   ratingAvg: 4.8,
   ratingCount: 64,
+};
+
+export const seedPanditAvailability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[]; leaves: PanditLeave[] } = {
+  recurring: [
+    { weekday: 1, start: '09:00', end: '13:00' },
+    { weekday: 3, start: '09:00', end: '13:00' },
+    { weekday: 6, start: '07:00', end: '12:00' },
+  ],
+  slots: [
+    { id: 'av-1', date: '2026-06-28', start: '10:00', end: '13:00' },
+    { id: 'av-2', date: '2026-07-04', start: '08:00', end: '11:00' },
+  ],
+  leaves: [
+    { id: 'lv-1', scope: 'dates', type: 'festival', fromDate: '2026-07-10', toDate: '2026-07-12', reason: 'Out of town for a festival' },
+  ],
 };

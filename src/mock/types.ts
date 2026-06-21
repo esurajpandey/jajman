@@ -239,3 +239,16 @@ export interface PanditSelfProfile {
   documents: OnboardingDoc[];
   availability: { recurring: OnboardingRecurring[]; slots: OnboardingSlot[] };
 }
+
+// --- P3c: leave ---
+export type LeaveType = 'vacation' | 'festival' | 'personal';
+export interface PanditLeave {
+  id: string;
+  scope: 'dates' | 'slot';
+  type: LeaveType;
+  fromDate: string; // yyyy-mm-dd
+  toDate?: string;  // for date ranges (scope='dates')
+  startTime?: string; // for scope='slot'
+  endTime?: string;
+  reason?: string;
+}
