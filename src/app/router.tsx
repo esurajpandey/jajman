@@ -59,6 +59,8 @@ import { PanditOnboardingLayout } from '../components/shell/PanditOnboardingLayo
 import { OnboardingIntroScreen } from '../screens/pandit/onboarding/OnboardingIntroScreen';
 import { OnbProfileScreen } from '../screens/pandit/onboarding/OnbProfileScreen';
 import { OnbServiceScreen } from '../screens/pandit/onboarding/OnbServiceScreen';
+import { OnbPujasScreen } from '../screens/pandit/onboarding/OnbPujasScreen';
+import { OnbCustomPujaScreen } from '../screens/pandit/onboarding/OnbCustomPujaScreen';
 import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen';
 import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
@@ -167,7 +169,8 @@ export const routes: RouteObject[] = [
       { path: '/pandit/onboarding/profile', element: <OnbProfileScreen /> },
       { path: '/pandit/onboarding/service', element: <OnbServiceScreen /> },
       // Task 4: /pandit/onboarding/profile, /service — done
-      // Task 5: /pandit/onboarding/pujas, /pujas/custom
+      { path: '/pandit/onboarding/pujas', element: <OnbPujasScreen /> },
+      { path: '/pandit/onboarding/pujas/custom', element: <OnbCustomPujaScreen /> },
       // Task 6: /pandit/onboarding/documents, /availability
       // Task 7: /pandit/onboarding/submit
     ],
