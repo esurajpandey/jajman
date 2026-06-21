@@ -50,6 +50,8 @@ import { ReceiptScreen } from '../screens/jajman/profile/ReceiptScreen';
 import { MyReviewsScreen } from '../screens/jajman/profile/MyReviewsScreen';
 import { BecomePanditScreen } from '../screens/jajman/profile/BecomePanditScreen';
 import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen';
+import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
+import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -134,6 +136,8 @@ export const routes: RouteObject[] = [
       { path: '/app/profile/reviews', element: <MyReviewsScreen /> },
       { path: '/app/become-pandit', element: <BecomePanditScreen /> },
       { path: '/app/notifications', element: <NotificationsScreen /> },
+      { path: '/app/disputes', element: <DisputesListScreen /> },
+      { path: '/app/disputes/:disputeId', element: <DisputeDetailScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
