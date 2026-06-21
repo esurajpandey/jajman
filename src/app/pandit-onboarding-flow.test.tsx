@@ -32,7 +32,7 @@ describe('pandit onboarding flow (integration)', () => {
     expect(useSessionStore.getState().user?.roles).toContain('pandit');
 
     fireEvent.click(screen.getByRole('button', { name: 'Simulate approval' }));
-    expect(screen.getByText(/You're approved/)).toBeInTheDocument();
+    expect(screen.getByText(/Namaste/)).toBeInTheDocument();
     expect(useSessionStore.getState().panditStatus).toBe('approved');
   });
 });

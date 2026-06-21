@@ -23,6 +23,6 @@ describe('pandit gating (§0.6)', () => {
     useSessionStore.getState().setPanditStatus('approved');
     const router = createMemoryRouter(routes, { initialEntries: ['/pandit/dashboard'] });
     render(<RouterProvider router={router} />);
-    expect(screen.getByText(/You're approved/)).toBeInTheDocument();
+    expect(screen.getByText(/Namaste/)).toBeInTheDocument();
   });
 });
