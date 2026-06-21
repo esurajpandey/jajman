@@ -36,6 +36,7 @@ import { BookingsListScreen } from '../screens/jajman/BookingsListScreen';
 import { RatePanditScreen } from '../screens/jajman/booking/RatePanditScreen';
 import { ManageRecurringScreen } from '../screens/jajman/booking/ManageRecurringScreen';
 import { FavoritesScreen } from '../screens/jajman/FavoritesScreen';
+import { ProfileScreen } from '../screens/jajman/ProfileScreen';
 import { ConversationsListScreen } from '../screens/jajman/chat/ConversationsListScreen';
 import { ChatThreadScreen } from '../screens/jajman/chat/ChatThreadScreen';
 
@@ -84,6 +85,7 @@ export const routes: RouteObject[] = [
       { path: '/app/search', element: <SearchScreen /> },
       { path: '/app/bookings', element: <BookingsListScreen /> },
       { path: '/app/favorites', element: <FavoritesScreen /> },
+      { path: '/app/profile', element: <ProfileScreen /> },
     ],
   },
   {
