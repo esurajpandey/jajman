@@ -55,6 +55,8 @@ import { PaymentHistoryScreen } from '../screens/jajman/profile/PaymentHistorySc
 import { ReceiptScreen } from '../screens/jajman/profile/ReceiptScreen';
 import { MyReviewsScreen } from '../screens/jajman/profile/MyReviewsScreen';
 import { BecomePanditScreen } from '../screens/jajman/profile/BecomePanditScreen';
+import { PanditOnboardingLayout } from '../components/shell/PanditOnboardingLayout';
+import { OnboardingIntroScreen } from '../screens/pandit/onboarding/OnboardingIntroScreen';
 import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen';
 import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
@@ -150,6 +152,20 @@ export const routes: RouteObject[] = [
       { path: '/app/disputes/:disputeId', element: <DisputeDetailScreen /> },
       { path: '/app/referral', element: <ReferralScreen /> },
       { path: '/app/help', element: <HelpScreen /> },
+    ],
+  },
+  {
+    element: (
+      <RequireAuth>
+        <PanditOnboardingLayout />
+      </RequireAuth>
+    ),
+    children: [
+      { path: '/pandit/onboarding', element: <OnboardingIntroScreen /> },
+      // Task 4: /pandit/onboarding/profile, /service
+      // Task 5: /pandit/onboarding/pujas, /pujas/custom
+      // Task 6: /pandit/onboarding/documents, /availability
+      // Task 7: /pandit/onboarding/submit
     ],
   },
   {

@@ -84,7 +84,7 @@ export function ProfileScreen() {
           ) : isPandit ? (
             <Button variant="outline" onClick={() => { switchMode('pandit'); navigate('/'); }}>Switch to Pandit</Button>
           ) : (
-            <Button variant="outline" onClick={() => navigate('/app/become-pandit')}>Become a Pandit</Button>
+            <Button variant="outline" onClick={() => navigate('/pandit/onboarding')}>Become a Pandit</Button>
           )}
         </Card>
 

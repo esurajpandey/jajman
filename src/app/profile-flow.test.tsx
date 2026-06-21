@@ -24,11 +24,11 @@ describe('profile flow (integration)', () => {
     expect(screen.getByText('Community temple')).toBeInTheDocument();
   });
 
-  it('Become a Pandit → Start Onboarding moves the account to pending approval', () => {
-    const router = createMemoryRouter(routes, { initialEntries: ['/app/become-pandit'] });
+  it('Become a Pandit → clicking "Become a Pandit" from Profile lands on the onboarding intro', () => {
+    const router = createMemoryRouter(routes, { initialEntries: ['/app/profile'] });
     render(<RouterProvider router={router} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Start Pandit Onboarding' }));
-    expect(screen.getByText('Awaiting admin approval')).toBeInTheDocument();
-    expect(useSessionStore.getState().panditStatus).toBe('pending');
+    fireEvent.click(screen.getByRole('button', { name: 'Become a Pandit' }));
+    expect(screen.getByText('Offer your seva to families near you')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Get started' })).toBeInTheDocument();
   });
 });
