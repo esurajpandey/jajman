@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { nanoid } from 'nanoid';
 import type { ChatThread } from '../mock/types';
 import { seedThreads } from './../mock/seed';
+import { useUiStore } from './uiStore';
 
 interface ChatState {
   threads: ChatThread[];
@@ -19,7 +20,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
   ensureThreadForBooking: (bookingId, panditId) => {
     set((s) => {
       if (s.threads.some((t) => t.bookingId === bookingId)) return s;
-      const thread: ChatThread = { id: `thr-${nanoid(6)}`, bookingId, panditId, phoneShared: false, messages: [] };
+      const thread: ChatThread = { id: `thr-${nanoid(6)}`, bookingId, panditId, phoneShared: useUiStore.getState().phoneShareDefault, messages: [] };
       return { threads: [thread, ...s.threads] };
     });
     return get().getThreadForBooking(bookingId)!;

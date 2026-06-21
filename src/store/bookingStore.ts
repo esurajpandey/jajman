@@ -70,7 +70,7 @@ export const useBookingStore = create<BookingState>((set, get) => ({
         pujaId: null,
         pujaStartISO: null,
         slotLabel: null,
-        addressId: null,
+        addressId: get().getDefaultAddress()?.id ?? null,
         attachments: [],
         notes: '',
         isEmergency: false,

@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useChatStore } from './chatStore';
+import { useUiStore } from './uiStore';
 
 beforeEach(() => useChatStore.setState(useChatStore.getInitialState()));
 
@@ -30,5 +31,23 @@ describe('chatStore', () => {
     const before = useChatStore.getState().getThread('thr-1')!.phoneShared;
     useChatStore.getState().togglePhoneShared('thr-1');
     expect(useChatStore.getState().getThread('thr-1')!.phoneShared).toBe(!before);
+  });
+});
+
+describe('phone-visibility default (P2c wiring)', () => {
+  beforeEach(() => {
+    useChatStore.setState(useChatStore.getInitialState());
+    useUiStore.setState(useUiStore.getInitialState());
+  });
+
+  it('new threads inherit uiStore.phoneShareDefault = true', () => {
+    useUiStore.getState().setPhoneShareDefault(true);
+    const t = useChatStore.getState().ensureThreadForBooking('bkg-new-1', 'pnd-1');
+    expect(t.phoneShared).toBe(true);
+  });
+
+  it('new threads default to hidden when phoneShareDefault = false', () => {
+    const t = useChatStore.getState().ensureThreadForBooking('bkg-new-2', 'pnd-1');
+    expect(t.phoneShared).toBe(false);
   });
 });

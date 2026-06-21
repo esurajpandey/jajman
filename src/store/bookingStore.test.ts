@@ -106,3 +106,17 @@ describe('addresses — default flag (P2b)', () => {
     expect(useBookingStore.getState().getDefaultAddress()?.id).toBe('addr-home');
   });
 });
+
+describe('startDraft pre-selects the default address (P2c wiring)', () => {
+  beforeEach(() => useBookingStore.setState({ addresses: seedAddresses, draft: null }));
+
+  it('uses the default address id when no override is given', () => {
+    useBookingStore.getState().startDraft('pnd-1');
+    expect(useBookingStore.getState().draft?.addressId).toBe('addr-home');
+  });
+
+  it('an explicit addressId override still wins', () => {
+    useBookingStore.getState().startDraft('pnd-1', { addressId: 'addr-temple' });
+    expect(useBookingStore.getState().draft?.addressId).toBe('addr-temple');
+  });
+});
