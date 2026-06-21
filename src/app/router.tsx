@@ -45,6 +45,8 @@ import { EditProfileScreen } from '../screens/jajman/profile/EditProfileScreen';
 import { SettingsScreen } from '../screens/jajman/profile/SettingsScreen';
 import { NotificationPrefsScreen } from '../screens/jajman/profile/NotificationPrefsScreen';
 import { LanguagePrefScreen } from '../screens/jajman/profile/LanguagePrefScreen';
+import { PaymentHistoryScreen } from '../screens/jajman/profile/PaymentHistoryScreen';
+import { ReceiptScreen } from '../screens/jajman/profile/ReceiptScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -124,6 +126,8 @@ export const routes: RouteObject[] = [
       { path: '/app/settings', element: <SettingsScreen /> },
       { path: '/app/profile/notifications', element: <NotificationPrefsScreen /> },
       { path: '/app/profile/language', element: <LanguagePrefScreen /> },
+      { path: '/app/profile/payments', element: <PaymentHistoryScreen /> },
+      { path: '/app/receipt/:bookingId', element: <ReceiptScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
