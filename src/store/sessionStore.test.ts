@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useSessionStore, MOCK_OTP } from './sessionStore';
+import { defaultNotificationPrefs } from './sessionStore';
 
 beforeEach(() => {
   useSessionStore.setState(useSessionStore.getInitialState());
@@ -53,5 +54,26 @@ describe('sessionStore', () => {
     useSessionStore.getState().logout();
     expect(useSessionStore.getState().authed).toBe(false);
     expect(useSessionStore.getState().isAdmin).toBe(false);
+  });
+});
+
+describe('profile + notification prefs (P2b)', () => {
+  beforeEach(() => {
+    useSessionStore.setState(useSessionStore.getInitialState());
+    useSessionStore.getState().setPendingPhone('9999999999');
+    useSessionStore.getState().verifyOtp('123456');
+  });
+
+  it('updateProfile merges fields without clearing the session', () => {
+    useSessionStore.getState().updateProfile({ name: 'Ravi', email: 'ravi@example.com' });
+    expect(useSessionStore.getState().user?.name).toBe('Ravi');
+    expect(useSessionStore.getState().user?.email).toBe('ravi@example.com');
+    expect(useSessionStore.getState().authed).toBe(true);
+  });
+
+  it('setNotificationPref toggles a single preference', () => {
+    expect(useSessionStore.getState().notificationPrefs.promotions).toBe(defaultNotificationPrefs.promotions);
+    useSessionStore.getState().setNotificationPref('promotions', true);
+    expect(useSessionStore.getState().notificationPrefs.promotions).toBe(true);
   });
 });

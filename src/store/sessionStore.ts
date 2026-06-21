@@ -11,9 +11,31 @@ export interface SessionUser {
   id: string;
   name: string;
   phone: string;
+  email?: string; // P2b
+  about?: string; // P2b
   roles: Role[];
   profileComplete: boolean;
 }
+
+export interface NotificationPrefs {
+  sms: boolean;
+  whatsapp: boolean;
+  bookingUpdates: boolean;
+  paymentReminders: boolean;
+  promotions: boolean;
+  referral: boolean;
+  reviews: boolean;
+}
+
+export const defaultNotificationPrefs: NotificationPrefs = {
+  sms: true,
+  whatsapp: true,
+  bookingUpdates: true,
+  paymentReminders: true,
+  promotions: false,
+  referral: true,
+  reviews: true,
+};
 
 interface SessionState {
   authed: boolean;
@@ -23,6 +45,7 @@ interface SessionState {
   panditStatus: PanditStatus;
   pendingPhone: string | null;
   pendingName: string | null; // set during register before OTP
+  notificationPrefs: NotificationPrefs;
   setPendingPhone: (phone: string | null) => void;
   setPendingName: (name: string | null) => void;
   verifyOtp: (code: string) => boolean;
@@ -31,6 +54,8 @@ interface SessionState {
   becomePandit: () => void;
   switchMode: (role: 'jajman' | 'pandit') => void;
   completeProfile: (patch?: Partial<SessionUser>) => void;
+  updateProfile: (patch: Partial<SessionUser>) => void;
+  setNotificationPref: (key: keyof NotificationPrefs, value: boolean) => void;
   logout: () => void;
 }
 
@@ -46,6 +71,7 @@ export const useSessionStore = create<SessionState>((set, get) => ({
   panditStatus: 'none',
   pendingPhone: null,
   pendingName: null,
+  notificationPrefs: defaultNotificationPrefs,
 
   setPendingPhone: (pendingPhone) => set({ pendingPhone }),
   setPendingName: (pendingName) => set({ pendingName }),
@@ -90,6 +116,11 @@ export const useSessionStore = create<SessionState>((set, get) => ({
   completeProfile: (patch) =>
     set((s) => ({ user: s.user ? { ...s.user, ...patch, profileComplete: true } : s.user })),
 
+  updateProfile: (patch) => set((s) => ({ user: s.user ? { ...s.user, ...patch } : s.user })),
+
+  setNotificationPref: (key, value) =>
+    set((s) => ({ notificationPrefs: { ...s.notificationPrefs, [key]: value } })),
+
   logout: () =>
     set({
       authed: false,
@@ -99,5 +130,6 @@ export const useSessionStore = create<SessionState>((set, get) => ({
       panditStatus: 'none',
       pendingPhone: null,
       pendingName: null,
+      notificationPrefs: defaultNotificationPrefs,
     }),
 }));

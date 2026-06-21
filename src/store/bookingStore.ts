@@ -38,6 +38,8 @@ interface BookingState {
   addAddress: (addr: Omit<Address, 'id'>) => Address;
   updateAddress: (id: string, patch: Partial<Omit<Address, 'id'>>) => void;
   deleteAddress: (id: string) => void;
+  setDefaultAddress: (id: string) => void;
+  getDefaultAddress: () => Address | undefined;
   cancelBooking: (id: string, initiatedBy: 'jajman' | 'pandit', reason?: string) => void;
   rateBooking: (id: string) => void;
   createRecurring: (panditId: string, pujaId: string, interval: RecurInterval, fromISO: string) => RecurringSeries;
@@ -140,11 +142,24 @@ export const useBookingStore = create<BookingState>((set, get) => ({
 
   addAddress: (addr) => {
     const created: Address = { ...addr, id: `addr-${nanoid(6)}` };
-    set((s) => ({ addresses: [...s.addresses, created] }));
+    set((s) => ({
+      addresses: created.isDefault
+        ? [...s.addresses.map((a) => ({ ...a, isDefault: false })), created]
+        : [...s.addresses, created],
+    }));
     return created;
   },
-  updateAddress: (id, patch) => set((s) => ({ addresses: s.addresses.map((a) => (a.id === id ? { ...a, ...patch } : a)) })),
+  updateAddress: (id, patch) =>
+    set((s) => ({
+      addresses: s.addresses.map((a) =>
+        a.id === id ? { ...a, ...patch } : patch.isDefault ? { ...a, isDefault: false } : a,
+      ),
+    })),
   deleteAddress: (id) => set((s) => ({ addresses: s.addresses.filter((a) => a.id !== id) })),
+
+  setDefaultAddress: (id) =>
+    set((s) => ({ addresses: s.addresses.map((a) => ({ ...a, isDefault: a.id === id })) })),
+  getDefaultAddress: () => get().addresses.find((a) => a.isDefault) ?? get().addresses[0],
 
   cancelBooking: (id, initiatedBy, reason) =>
     set((s) => ({

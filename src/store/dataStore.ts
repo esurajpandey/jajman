@@ -19,6 +19,8 @@ interface DataState {
   getFavorites: () => PanditSummary[];
   toggleFavorite: (panditId: string) => void;
   addReview: (review: Review) => void;
+  getMyReviews: () => Review[];
+  deleteReview: (id: string) => void;
 }
 
 export const useDataStore = create<DataState>((set, get) => ({
@@ -45,4 +47,6 @@ export const useDataStore = create<DataState>((set, get) => ({
       pandits: s.pandits.map((p) => (p.id === panditId ? { ...p, favorite: !p.favorite } : p)),
     })),
   addReview: (review) => set((s) => ({ reviews: [review, ...s.reviews] })),
+  getMyReviews: () => get().reviews.filter((r) => r.mine),
+  deleteReview: (id) => set((s) => ({ reviews: s.reviews.filter((r) => r.id !== id) })),
 }));

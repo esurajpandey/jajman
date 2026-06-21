@@ -29,7 +29,8 @@ export interface Review {
   jajmanName: string;
   rating: number; // 1..5
   text: string;
-  date: string; // ISO
+  date: string; // ISO (yyyy-mm-dd)
+  mine?: boolean; // P2b — authored by the current jajman (drives "My reviews")
 }
 
 export type TravelPreference = 'within' | 'outside' | 'anywhere';
@@ -64,6 +65,7 @@ export interface Address {
   line: string;
   city: string;
   notes?: string;
+  isDefault?: boolean; // P2b — the address pre-selected in booking + Home
 }
 
 export type AttachmentKind = 'image' | 'doc' | 'note';

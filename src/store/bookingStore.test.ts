@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useBookingStore } from './bookingStore';
+import { seedAddresses } from '../mock/seed';
 
 const NOW = '2026-06-20T09:00:00.000Z';
 
@@ -80,5 +81,28 @@ describe('bookingStore', () => {
     expect(useBookingStore.getState().getRecurring().find((x) => x.id === r.id)?.status).toBe('paused');
     useBookingStore.getState().cancelRecurring(r.id);
     expect(useBookingStore.getState().getRecurring().find((x) => x.id === r.id)?.status).toBe('cancelled');
+  });
+});
+
+describe('addresses — default flag (P2b)', () => {
+  beforeEach(() => useBookingStore.setState({ addresses: seedAddresses }));
+
+  it('setDefaultAddress makes exactly one address default', () => {
+    useBookingStore.getState().setDefaultAddress('addr-temple');
+    const addrs = useBookingStore.getState().addresses;
+    expect(addrs.filter((a) => a.isDefault)).toHaveLength(1);
+    expect(addrs.find((a) => a.id === 'addr-temple')!.isDefault).toBe(true);
+    expect(addrs.find((a) => a.id === 'addr-home')!.isDefault).toBe(false);
+  });
+
+  it('adding an address with isDefault clears the previous default', () => {
+    useBookingStore.getState().addAddress({ label: 'Office', type: 'custom', line: '1 MG Road', city: 'Pune', isDefault: true });
+    const addrs = useBookingStore.getState().addresses;
+    expect(addrs.filter((a) => a.isDefault)).toHaveLength(1);
+    expect(addrs.find((a) => a.label === 'Office')!.isDefault).toBe(true);
+  });
+
+  it('getDefaultAddress returns the flagged default', () => {
+    expect(useBookingStore.getState().getDefaultAddress()?.id).toBe('addr-home');
   });
 });

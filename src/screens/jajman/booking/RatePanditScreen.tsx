@@ -51,7 +51,7 @@ export function RatePanditScreen() {
   }
 
   const submit = () => {
-    addReview({ id: `rev-${nanoid(5)}`, panditId: pandit.id, jajmanName: userName, rating: stars, text: text.trim() || 'Great experience.', date: new Date().toISOString().slice(0, 10) });
+    addReview({ id: `rev-${nanoid(5)}`, panditId: pandit.id, jajmanName: userName, rating: stars, text: text.trim() || 'Great experience.', date: new Date().toISOString().slice(0, 10), mine: true });
     rateBooking(booking.id);
     navigate(`/app/booking/${booking.id}`, { replace: true });
   };

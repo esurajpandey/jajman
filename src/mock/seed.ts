@@ -106,10 +106,11 @@ export const seedReviews: Review[] = [
   { id: 'rev-8', panditId: 'pnd-5', jajmanName: 'Arjun Mehta', rating: 5, text: 'Conducted our marriage ceremony flawlessly.', date: '2026-05-18' },
   { id: 'rev-9', panditId: 'pnd-6', jajmanName: 'Kavya Reddy', rating: 4, text: 'Very devotional temple rituals, would book again.', date: '2026-04-05' },
   { id: 'rev-10', panditId: 'pnd-4', jajmanName: 'Naveen Kumar', rating: 4, text: 'Did the shradh respectfully and explained each step.', date: '2026-03-22' },
+  { id: 'rev-mine-1', panditId: 'pnd-6', jajmanName: 'You', rating: 5, text: 'Beautiful Ganesh puja at home — punctual and very smooth.', date: '2026-05-03', mine: true },
 ];
 
 export const seedAddresses: Address[] = [
-  { id: 'addr-home', label: 'Home', type: 'home', line: '12 Tulsi Apartments, Kothrud', city: 'Pune', notes: 'Ring the bell twice' },
+  { id: 'addr-home', label: 'Home', type: 'home', line: '12 Tulsi Apartments, Kothrud', city: 'Pune', notes: 'Ring the bell twice', isDefault: true },
   { id: 'addr-parents', label: "Parents' home", type: 'parents', line: '4 Shanti Nagar, Aundh', city: 'Pune' },
   { id: 'addr-temple', label: 'Community temple', type: 'temple', line: 'Ganesh Mandir, FC Road', city: 'Pune' },
 ];

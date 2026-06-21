@@ -48,3 +48,20 @@ describe('dataStore', () => {
     expect(useDataStore.getState().getReviewsForPandit('pnd-1').length).toBe(before + 1);
   });
 });
+
+describe('reviews — mine + delete (P2b)', () => {
+  beforeEach(() => useDataStore.setState({ reviews: seedReviews }));
+
+  it('getMyReviews returns only authored reviews', () => {
+    const mine = useDataStore.getState().getMyReviews();
+    expect(mine.length).toBeGreaterThan(0);
+    expect(mine.every((r) => r.mine)).toBe(true);
+  });
+
+  it('deleteReview removes a review by id', () => {
+    const before = useDataStore.getState().reviews.length;
+    useDataStore.getState().deleteReview('rev-mine-1');
+    expect(useDataStore.getState().reviews).toHaveLength(before - 1);
+    expect(useDataStore.getState().getMyReviews().find((r) => r.id === 'rev-mine-1')).toBeUndefined();
+  });
+});
