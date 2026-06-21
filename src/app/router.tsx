@@ -63,6 +63,7 @@ import { OnbPujasScreen } from '../screens/pandit/onboarding/OnbPujasScreen';
 import { OnbCustomPujaScreen } from '../screens/pandit/onboarding/OnbCustomPujaScreen';
 import { OnbDocumentsScreen } from '../screens/pandit/onboarding/OnbDocumentsScreen';
 import { OnbAvailabilityScreen } from '../screens/pandit/onboarding/OnbAvailabilityScreen';
+import { OnbSubmitScreen } from '../screens/pandit/onboarding/OnbSubmitScreen';
 import { NotificationsScreen } from '../screens/jajman/comms/NotificationsScreen';
 import { DisputesListScreen } from '../screens/jajman/comms/DisputesListScreen';
 import { DisputeDetailScreen } from '../screens/jajman/comms/DisputeDetailScreen';
@@ -175,7 +176,7 @@ export const routes: RouteObject[] = [
       { path: '/pandit/onboarding/pujas/custom', element: <OnbCustomPujaScreen /> },
       { path: '/pandit/onboarding/documents', element: <OnbDocumentsScreen /> },
       { path: '/pandit/onboarding/availability', element: <OnbAvailabilityScreen /> },
-      // Task 7: /pandit/onboarding/submit
+      { path: '/pandit/onboarding/submit', element: <OnbSubmitScreen /> },
     ],
   },
   {
