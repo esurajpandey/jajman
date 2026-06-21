@@ -47,6 +47,8 @@ import { NotificationPrefsScreen } from '../screens/jajman/profile/NotificationP
 import { LanguagePrefScreen } from '../screens/jajman/profile/LanguagePrefScreen';
 import { PaymentHistoryScreen } from '../screens/jajman/profile/PaymentHistoryScreen';
 import { ReceiptScreen } from '../screens/jajman/profile/ReceiptScreen';
+import { MyReviewsScreen } from '../screens/jajman/profile/MyReviewsScreen';
+import { BecomePanditScreen } from '../screens/jajman/profile/BecomePanditScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -128,6 +130,8 @@ export const routes: RouteObject[] = [
       { path: '/app/profile/language', element: <LanguagePrefScreen /> },
       { path: '/app/profile/payments', element: <PaymentHistoryScreen /> },
       { path: '/app/receipt/:bookingId', element: <ReceiptScreen /> },
+      { path: '/app/profile/reviews', element: <MyReviewsScreen /> },
+      { path: '/app/become-pandit', element: <BecomePanditScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
