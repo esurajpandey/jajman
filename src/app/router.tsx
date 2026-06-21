@@ -80,6 +80,9 @@ import { EarningsScreen } from '../screens/pandit/EarningsScreen';
 import { WalletScreen } from '../screens/pandit/WalletScreen';
 import { WithdrawScreen } from '../screens/pandit/WithdrawScreen';
 import { WithdrawalStatusScreen } from '../screens/pandit/WithdrawalStatusScreen';
+import { TransactionsScreen } from '../screens/pandit/TransactionsScreen';
+import { BankAccountsScreen } from '../screens/pandit/BankAccountsScreen';
+import { BankEditScreen } from '../screens/pandit/BankEditScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -209,6 +212,10 @@ export const routes: RouteObject[] = [
       { path: '/pandit/wallet', element: <RequirePanditApproved><WalletScreen /></RequirePanditApproved> },
       { path: '/pandit/wallet/withdraw', element: <RequirePanditApproved><WithdrawScreen /></RequirePanditApproved> },
       { path: '/pandit/wallet/withdraw/:withdrawalId', element: <RequirePanditApproved><WithdrawalStatusScreen /></RequirePanditApproved> },
+      { path: '/pandit/wallet/transactions', element: <RequirePanditApproved><TransactionsScreen /></RequirePanditApproved> },
+      { path: '/pandit/wallet/banks', element: <RequirePanditApproved><BankAccountsScreen /></RequirePanditApproved> },
+      { path: '/pandit/wallet/banks/new', element: <RequirePanditApproved><BankEditScreen /></RequirePanditApproved> },
+      { path: '/pandit/wallet/banks/:bankId/edit', element: <RequirePanditApproved><BankEditScreen /></RequirePanditApproved> },
       { path: '/pandit/ratings', element: <RequirePanditApproved><PanditStub title="Ratings" /></RequirePanditApproved> },
       { path: '/pandit/profile', element: <PanditStub title="Pandit profile" /> },
     ],
