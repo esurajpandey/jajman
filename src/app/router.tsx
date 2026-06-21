@@ -43,6 +43,8 @@ import { AddressesListScreen } from '../screens/jajman/profile/AddressesListScre
 import { AddressEditScreen } from '../screens/jajman/profile/AddressEditScreen';
 import { EditProfileScreen } from '../screens/jajman/profile/EditProfileScreen';
 import { SettingsScreen } from '../screens/jajman/profile/SettingsScreen';
+import { NotificationPrefsScreen } from '../screens/jajman/profile/NotificationPrefsScreen';
+import { LanguagePrefScreen } from '../screens/jajman/profile/LanguagePrefScreen';
 
 export const routes: RouteObject[] = [
   { path: '/', element: <SplashScreen /> },
@@ -120,6 +122,8 @@ export const routes: RouteObject[] = [
       { path: '/app/profile/addresses/:id/edit', element: <AddressEditScreen /> },
       { path: '/app/profile/edit', element: <EditProfileScreen /> },
       { path: '/app/settings', element: <SettingsScreen /> },
+      { path: '/app/profile/notifications', element: <NotificationPrefsScreen /> },
+      { path: '/app/profile/language', element: <LanguagePrefScreen /> },
     ],
   },
   { path: '*', element: <AuthLayout />, children: [{ path: '*', element: <NotFound /> }] },
