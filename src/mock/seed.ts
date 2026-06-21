@@ -304,9 +304,6 @@ export const seedPanditBookings: Booking[] = [
 ];
 
 export const seedPanditStats = {
-  availableBalance: 12400,
-  pendingBalance: 1344,
-  monthEarnings: 38600,
   ratingAvg: 4.8,
   ratingCount: 64,
 };

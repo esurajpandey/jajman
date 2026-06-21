@@ -7,7 +7,9 @@ import { Badge } from '../../components/ui/Badge';
 import { ToggleRow } from '../../components/ui/ToggleRow';
 import { useSessionStore } from '../../store/sessionStore';
 import { usePanditBookingStore } from '../../store/panditBookingStore';
+import { usePanditWalletStore } from '../../store/panditWalletStore';
 import { useDataStore } from '../../store/dataStore';
+import { walletSummary } from '../../domain/earnings';
 import { seedPanditStats } from '../../mock/seed';
 
 export function PanditDashboardScreen() {
@@ -19,6 +21,9 @@ export function PanditDashboardScreen() {
   const requests = usePanditBookingStore(useShallow((s) => s.getRequests(nowISO)));
   const today = usePanditBookingStore(useShallow((s) => s.getToday(nowISO)));
   const getPuja = useDataStore((s) => s.getPuja);
+  const allBookings = usePanditBookingStore(useShallow((s) => s.bookings));
+  const withdrawals = usePanditWalletStore(useShallow((s) => s.withdrawals));
+  const summary = walletSummary(allBookings, withdrawals);
 
   return (
     <>
@@ -53,8 +58,8 @@ export function PanditDashboardScreen() {
           <Card onClick={() => navigate('/pandit/earnings')} className="cursor-pointer p-3">
             <Wallet size={18} className="text-primary" />
             <p className="mt-1 text-xs text-muted">Available</p>
-            <p className="text-lg font-semibold">₹{seedPanditStats.availableBalance.toLocaleString('en-IN')}</p>
-            <p className="text-[11px] text-muted">This month ₹{seedPanditStats.monthEarnings.toLocaleString('en-IN')}</p>
+            <p className="text-lg font-semibold">₹{summary.available.toLocaleString('en-IN')}</p>
+            <p className="text-[11px] text-muted">Pending ₹{summary.pending.toLocaleString('en-IN')}</p>
           </Card>
           <Card onClick={() => navigate('/pandit/ratings')} className="cursor-pointer p-3">
             <Star size={18} className="fill-accent text-accent" />

@@ -4,12 +4,14 @@ import { MemoryRouter } from 'react-router-dom';
 import { PanditDashboardScreen } from './PanditDashboardScreen';
 import { useSessionStore, MOCK_OTP } from '../../store/sessionStore';
 import { usePanditBookingStore } from '../../store/panditBookingStore';
+import { usePanditWalletStore } from '../../store/panditWalletStore';
 import { useDataStore } from '../../store/dataStore';
-import { seedPanditBookings, seedCategories, seedPujas, seedPandits, seedReviews } from '../../mock/seed';
+import { seedPanditBookings, seedPanditBanks, seedPanditWithdrawals, seedCategories, seedPujas, seedPandits, seedReviews } from '../../mock/seed';
 
 beforeEach(() => {
   useSessionStore.setState(useSessionStore.getInitialState());
   usePanditBookingStore.setState({ bookings: seedPanditBookings });
+  usePanditWalletStore.setState({ banks: seedPanditBanks, withdrawals: seedPanditWithdrawals });
   useDataStore.setState({ categories: seedCategories, pujas: seedPujas, pandits: seedPandits, reviews: seedReviews });
   useSessionStore.getState().setPendingPhone('9999999999');
   useSessionStore.getState().verifyOtp(MOCK_OTP);
